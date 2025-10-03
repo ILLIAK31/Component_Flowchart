@@ -4,10 +4,10 @@ import { Global, keyframes } from '@emotion/react';
 
 const COLOR_BG = 'white';
 const COLOR_LINE = '#2b2929ff';
-const SPEED = '6s';
+const SPEED = '3.5s';
 const CORNER_R = '0.8vmin';
-const PAR_GAP = '3vmin';   // відступ між двома нижніми вертикалями
-const PAR_LEN = '45%';     // довжина другої (паралельної) нижньої вертикалі
+const PAR_GAP = '3vmin';
+const PAR_LEN = '45%';
 
 /* Animations */
 const moveDotStraight = keyframes({
@@ -20,7 +20,6 @@ const moveDotStraightDeep = keyframes({
   '50%': { top: '82%' },
   '100%': { top: '82%' }
 });
-/* ▼ ДЛЯ ДРУГОЇ КУЛЬКИ (ще нижче) — підкручуй 94% за потреби */
 const moveDotStraightDeeper = keyframes({
   '0%': { top: '0%' },
   '60%': { top: '82%' },
@@ -31,18 +30,15 @@ const moveDotCorner = keyframes({
   '45%': { top: '88%', left: 'calc(30% - 1px)' },
   '100%': { top: '88%', left: 'calc(100% - 1px)' }
 });
-
 const moveDotCornerLeft = keyframes({
-  '0%': { top: '40%', left: 'calc(30%)' },   // +2px від поточного
-  '45%': { top: '88%', left: 'calc(30%)' },
-  '100%': { top: '88%', left: 'calc(100%)' }
+  '0%': { top: '40%', left: '30%' },
+  '45%': { top: '88%', left: '30%' },
+  '100%': { top: '88%', left: '100%' }
 });
-
-// трішки лівіше за поточну траєкторію (підкрути -2px за потреби)
 const moveDotCornerRight = keyframes({
-  '0%': { top: '40%', left: 'calc(30%)' },
-  '45%': { top: '88%', left: 'calc(30%)' },
-  '100%': { top: '88%', left: 'calc(100%)' }
+  '0%': { top: '40%', left: '30%' },
+  '45%': { top: '88%', left: '30%' },
+  '100%': { top: '88%', left: '100%' }
 });
 
 const wrapper = {
@@ -62,14 +58,14 @@ const wrapper = {
     transform: 'translateX(-50%)',
     transformOrigin: '50% 100%',
     pointerEvents: 'none',
-    zIndex: 1,
+    zIndex: 1
   },
   '& > .item.-v-down': { transform: 'translateX(-50%) rotate(180deg)' },
 
   '& > .item > .line': {
     height: '100%',
     width: 'calc(50% + 1px)',
-    borderRight: `2px dashed ${COLOR_LINE}`,
+    borderRight: `2px dashed ${COLOR_LINE}`
   },
 
   '& > .item > .dot': { position: 'absolute', inset: 0 },
@@ -87,13 +83,13 @@ const wrapper = {
     animation: `${moveDotStraight} ${SPEED} linear infinite`
   },
 
-  /* головна нижня вертикаль — вниз -> центр (глибше) */
+  /* bottom main */
   '& > .item.-bottom-main > .dot::after': {
     animation: `${moveDotStraightDeep} ${SPEED} linear infinite`
   },
   '& > .item.-v-down > .circle > img': { transform: 'rotate(180deg)' },
 
-  /* паралельна нижня вертикаль — коротша, правіше і ПІД карткою, рух з центру вниз */
+  /* bottom parallel */
   '& > .item.-parallel': {
     left: `calc(50% + ${PAR_GAP})`,
     height: PAR_LEN,
@@ -104,7 +100,7 @@ const wrapper = {
     animationDirection: 'reverse'
   },
 
-  /* зовнішні картки */
+  /* cards */
   '& > .item > .circle, & > .item.-type2 > .circle': {
     position: 'absolute',
     top: 0,
@@ -133,7 +129,7 @@ const wrapper = {
     objectPosition: 'center'
   },
 
-  /* L-кути */
+  /* L corners */
   '& > .item.-type2': { top: 0, left: 0, transform: 'none', transformOrigin: '100% 100%' },
   '& > .item.-type2 > .line': {
     position: 'absolute',
@@ -173,7 +169,32 @@ const wrapper = {
   '& > .item.-type2.-br > .circle > img': { transform: 'scaleX(-1) scaleY(-1)' },
   '& > .item.-type2.-bl > .circle > img': { transform: 'scaleY(-1)' },
 
-  /* центр */
+  /* little centering tweaks for moving dots (you added earlier) */
+  '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': {
+    animation: `${moveDotCornerLeft} ${SPEED} linear infinite`
+  },
+  '& > .item.-type2.-tr > .dot::after, & > .item.-type2.-br > .dot::after': {
+    animation: `${moveDotCornerRight} ${SPEED} linear infinite`,
+    animationDirection: 'reverse'
+  },
+
+  /* ► ARROW for top-left L at the end near center */
+  '& > .item.-type2.-tl > .arrow': {
+    position: 'absolute',
+    top: '88%',              // по тій же висоті, що горизонталь L
+    left: '100%',            // кінець горизонталі (біля центру)
+    transform: 'translate(-10%, -50%)', // трохи "всередину" лінії
+    width: 0,
+    height: 0,
+    borderTop: '7px solid transparent',
+    borderBottom: '7px solid transparent',
+    borderLeft: `11px solid ${COLOR_LINE}`, // стрілка вправо
+    filter: 'drop-shadow(0 0 2px rgba(0,0,0,.15))',
+    pointerEvents: 'none',
+    zIndex: 2
+  },
+
+  /* center logo block */
   '& > .center': {
     position: 'absolute',
     top: '50%',
@@ -209,15 +230,6 @@ const wrapper = {
     height: '100%',
     objectFit: 'contain',
     objectPosition: 'center'
-  },
-
-  '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': {
-    animation: `${moveDotCornerLeft} ${SPEED} linear infinite`
-  },
-
-  '& > .item.-type2.-tr > .dot::after, & > .item.-type2.-br > .dot::after': {
-    animation: `${moveDotCornerRight} ${SPEED} linear infinite`,
-    animationDirection: 'reverse'
   }
 };
 
@@ -231,19 +243,16 @@ export default function EmpFlowchart({ images = {} }) {
         <div className="item" css={{ display: 'none' }} />
         <div className="item" css={{ display: 'none' }} />
 
-        {/* Низ: головна вертикаль з карткою (вниз -> центр) */}
+        {/* bottom main */}
         <div className="item -bottom-main -v-down">
           <div className="line" />
           <div className="dot" />
-          <div
-            className="circle"
-            style={{ width: '55%', height: '20%', ['--pad-x']: '1.2vmin' }}
-          >
+          <div className="circle" style={{ width: '55%', height: '20%', ['--pad-x']: '1.2vmin' }}>
             {bottomCenter && <img src={bottomCenter} alt="Bottom center" loading="lazy" decoding="async" />}
           </div>
         </div>
 
-        {/* Низ: паралельна вертикаль (центр -> вниз), коротша і під карткою */}
+        {/* bottom parallel */}
         <div className="item -parallel -v-down">
           <div className="line" />
           <div className="dot" />
@@ -251,10 +260,12 @@ export default function EmpFlowchart({ images = {} }) {
 
         <div className="item" css={{ display: 'none' }} />
 
-        {/* Кути */}
+        {/* corners */}
+        {/* TOP-LEFT with ARROW */}
         <div className="item -type2 -tl">
           <div className="line" />
           <div className="dot" />
+          <div className="arrow" /> {/* ← додана стрілка */}
           <div className="circle" style={{ width: '25%', height: '25%' }}>
             {topLeft && <img src={topLeft} alt="Top left" loading="lazy" decoding="async" />}
           </div>
@@ -284,7 +295,7 @@ export default function EmpFlowchart({ images = {} }) {
           </div>
         </div>
 
-        {/* Центр */}
+        {/* center */}
         <div className="center">
           <div className="circle" style={{ ['--pad-x']: '1.4vmin', ['--center-min-w']: '0px', ['--center-min-h']: '0px' }}>
             {center && (
