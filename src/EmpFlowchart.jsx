@@ -11,25 +11,38 @@ const PAR_LEN = '45%';     // довжина другої (паралельно�
 
 /* Animations */
 const moveDotStraight = keyframes({
-  '0%':   { top: '10%' },
-  '25%':  { top: '65%' },
+  '0%': { top: '10%' },
+  '25%': { top: '65%' },
   '100%': { top: '65%' }
 });
 const moveDotStraightDeep = keyframes({
-  '0%':   { top: '10%' },
-  '50%':  { top: '82%' },
+  '0%': { top: '10%' },
+  '50%': { top: '82%' },
   '100%': { top: '82%' }
 });
 /* ▼ ДЛЯ ДРУГОЇ КУЛЬКИ (ще нижче) — підкручуй 94% за потреби */
 const moveDotStraightDeeper = keyframes({
-  '0%':   { top: '0%' },
-  '60%':  { top: '82%' },
+  '0%': { top: '0%' },
+  '60%': { top: '82%' },
   '100%': { top: '82%' }
 });
 const moveDotCorner = keyframes({
-  '0%':   { top: '40%', left: 'calc(30% - 1px)' },
-  '45%':  { top: '88%', left: 'calc(30% - 1px)' },
+  '0%': { top: '40%', left: 'calc(30% - 1px)' },
+  '45%': { top: '88%', left: 'calc(30% - 1px)' },
   '100%': { top: '88%', left: 'calc(100% - 1px)' }
+});
+
+const moveDotCornerLeft = keyframes({
+  '0%': { top: '40%', left: 'calc(30%)' },   // +2px від поточного
+  '45%': { top: '88%', left: 'calc(30%)' },
+  '100%': { top: '88%', left: 'calc(100%)' }
+});
+
+// трішки лівіше за поточну траєкторію (підкрути -2px за потреби)
+const moveDotCornerRight = keyframes({
+  '0%': { top: '40%', left: 'calc(30%)' },
+  '45%': { top: '88%', left: 'calc(30%)' },
+  '100%': { top: '88%', left: 'calc(100%)' }
 });
 
 const wrapper = {
@@ -196,6 +209,15 @@ const wrapper = {
     height: '100%',
     objectFit: 'contain',
     objectPosition: 'center'
+  },
+
+  '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': {
+    animation: `${moveDotCornerLeft} ${SPEED} linear infinite`
+  },
+
+  '& > .item.-type2.-tr > .dot::after, & > .item.-type2.-br > .dot::after': {
+    animation: `${moveDotCornerRight} ${SPEED} linear infinite`,
+    animationDirection: 'reverse'
   }
 };
 
