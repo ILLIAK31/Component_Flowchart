@@ -64,7 +64,7 @@ const wrapper = {
 
   '& > .item > .line': {
     height: '100%',
-    width: 'calc(50% + 1px)',
+    width: 'calc(53%)',
     borderRight: `2px dashed ${COLOR_LINE}`
   },
 
@@ -72,13 +72,13 @@ const wrapper = {
   '& > .item > .dot::after': {
     content: "''",
     position: 'absolute',
-    left: 'calc(50% + 2px)',
+    left: 'calc(53% + 1px)',
     top: '10%',
     transform: 'translate(-50%, -50%)',
     height: '0.9vmin',
     width: '0.9vmin',
-    background: '#fff',
-    border: `2px solid ${COLOR_LINE}`,
+    background: '#fc4d57',
+    border: `2px solid #fc4d57`,
     borderRadius: '50%',
     animation: `${moveDotStraight} ${SPEED} linear infinite`
   },
@@ -151,8 +151,8 @@ const wrapper = {
     transform: 'translate(-50%, -50%)',
     height: '0.9vmin',
     width: '0.9vmin',
-    background: '#fff',
-    border: `2px solid ${COLOR_LINE}`,
+    background: '#fc4d57',
+    border: `2px solid #fc4d57`,
     borderRadius: '50%',
     animation: `${moveDotCorner} ${SPEED} linear infinite`
   },
