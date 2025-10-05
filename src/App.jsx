@@ -18,7 +18,10 @@ export default function App() {
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
         bottomCenter: bottomCenter,
-        center: center
+        center: center,
+        number1 : 6,
+        number2 : 3,
+        number3 : 30
       }}
     />
   )

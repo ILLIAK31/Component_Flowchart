@@ -64,7 +64,7 @@ const wrapper = {
 
   '& > .item > .line': {
     height: '100%',
-    width: 'calc(53%)',
+    width: '53%',
     borderRight: `2px dashed ${COLOR_LINE}`
   },
 
@@ -100,7 +100,7 @@ const wrapper = {
     animationDirection: 'reverse'
   },
 
-  /* cards */
+  /* cards (base) */
   '& > .item > .circle, & > .item.-type2 > .circle': {
     position: 'absolute',
     top: 0,
@@ -129,7 +129,7 @@ const wrapper = {
     objectPosition: 'center'
   },
 
-  /* L corners */
+  /* L-corners */
   '& > .item.-type2': { top: 0, left: 0, transform: 'none', transformOrigin: '100% 100%' },
   '& > .item.-type2 > .line': {
     position: 'absolute',
@@ -169,7 +169,7 @@ const wrapper = {
   '& > .item.-type2.-br > .circle > img': { transform: 'scaleX(-1) scaleY(-1)' },
   '& > .item.-type2.-bl > .circle > img': { transform: 'scaleY(-1)' },
 
-  /* little centering tweaks for moving dots (you added earlier) */
+  /* ball tweaks */
   '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': {
     animation: `${moveDotCornerLeft} ${SPEED} linear infinite`
   },
@@ -178,23 +178,112 @@ const wrapper = {
     animationDirection: 'reverse'
   },
 
-  /* ► ARROW for top-left L at the end near center */
-  '& > .item.-type2.-tl > .arrow': {
-    position: 'absolute',
-    top: '88%',              // по тій же висоті, що горизонталь L
-    left: '100%',            // кінець горизонталі (біля центру)
-    transform: 'translate(-10%, -50%)', // трохи "всередину" лінії
-    width: 0,
-    height: 0,
-    borderTop: '7px solid transparent',
-    borderBottom: '7px solid transparent',
-    borderLeft: `11px solid ${COLOR_LINE}`, // стрілка вправо
-    filter: 'drop-shadow(0 0 2px rgba(0,0,0,.15))',
-    pointerEvents: 'none',
-    zIndex: 2
+  /* TL number1 */
+  '& > .item.-type2.-tl > .circle': {
+    width: '38%',
+    height: '25%',
+    padding: '0 2vmin',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '1.2vmin'
+  },
+  '& > .item.-type2.-tl > .circle .iconBox': {
+    height: '90%',
+    aspectRatio: '1 / 1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  '& > .item.-type2.-tl > .circle .iconBox > img': {
+    height: '100%',
+    width: 'auto',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    objectFit: 'contain'
+  },
+  '& > .item.-type2.-tl > .circle .bigNum': {
+    lineHeight: 1,
+    fontWeight: 600,
+    color: '#2b2b2b',
+    fontSize: '7.2vmin',
+    flexShrink: 0
   },
 
-  /* center logo block */
+  /* BL number2 (flip Y на батьку компенсуємо всередині) */
+  '& > .item.-type2.-bl > .circle.-numCard': {
+    width: 'fit-content',
+    maxWidth: '44%',
+    height: '25%',
+    padding: '0 2vmin',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '1.2vmin',
+    transform: 'translate(-50%, -50%) scaleY(-1)'
+  },
+  '& > .item.-type2.-bl > .circle.-numCard .iconBox': {
+    height: '90%',
+    aspectRatio: '1 / 1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '0 0 auto'
+  },
+  '& > .item.-type2.-bl > .circle.-numCard .iconBox > img': {
+    paddingLeft: '20%',
+    height: '100%',
+    width: 'auto',
+    objectFit: 'contain'
+  },
+  '& > .item.-type2.-bl > .circle.-numCard .bigNum': {
+    lineHeight: 1,
+    fontWeight: 600,
+    color: '#2b2b2b',
+    fontSize: '7.2vmin',
+    flex: '0 0 auto'
+  },
+
+  /* TR number3 (flip X на батьку компенсуємо всередині) */
+  '& > .item.-type2.-tr > .circle.-numCard': {
+    width: 'fit-content',
+    maxWidth: '70%',                // більше простору для широкого логотипа
+    height: '25%',
+    padding: '0 2vmin',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '1.2vmin',
+    whiteSpace: 'nowrap',
+    transform: 'translate(-50%, -50%) scaleX(-1)'
+  },
+  '& > .item.-type2.-tr > .circle.-numCard .iconBox': {
+    height: '90%',
+    aspectRatio: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '1 1 0',
+    minWidth: 0
+  },
+  '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': {
+    paddingTop: '10%',
+    paddingLeft: '10%',
+    height: '100%',
+    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    objectFit: 'contain'
+  },
+  '& > .item.-type2.-tr > .circle.-numCard .bigNum': {
+    lineHeight: 1,
+    fontWeight: 600,
+    color: '#2b2b2b',
+    fontSize: '7.2vmin',
+    flex: '0 0 auto'
+  },
+
+  /* center */
   '& > .center': {
     position: 'absolute',
     top: '50%',
@@ -234,7 +323,13 @@ const wrapper = {
 };
 
 export default function EmpFlowchart({ images = {} }) {
-  const { topLeft, topRight, bottomLeft, bottomRight, bottomCenter, center } = images;
+  const {
+    topLeft, topRight, bottomLeft, bottomRight, bottomCenter, center,
+    number1, number2, number3
+  } = images;
+
+  const has2 = number2 !== undefined && number2 !== null;
+  const has3 = number3 !== undefined && number3 !== null;
 
   return (
     <>
@@ -260,33 +355,55 @@ export default function EmpFlowchart({ images = {} }) {
 
         <div className="item" css={{ display: 'none' }} />
 
-        {/* corners */}
-        {/* TOP-LEFT with ARROW */}
+        {/* TL with number1 */}
         <div className="item -type2 -tl">
           <div className="line" />
           <div className="dot" />
-          <div className="arrow" /> {/* ← додана стрілка */}
-          <div className="circle" style={{ width: '25%', height: '25%' }}>
-            {topLeft && <img src={topLeft} alt="Top left" loading="lazy" decoding="async" />}
+          <div className="circle">
+            <span className="bigNum">{number1}</span>
+            <div className="iconBox">
+              {topLeft && <img src={topLeft} alt="Top left" loading="lazy" decoding="async" />}
+            </div>
           </div>
         </div>
 
+        {/* TR with number3 */}
         <div className="item -type2 -tr">
           <div className="line" />
           <div className="dot" />
-          <div className="circle" style={{ width: '55%', height: '25%', ['--pad-x']: '1.2vmin' }}>
-            {topRight && <img src={topRight} alt="Top right" loading="lazy" decoding="async" />}
-          </div>
+          {has3 ? (
+            <div className="circle -numCard">
+              <span className="bigNum">{number3}</span>
+              <div className="iconBox">
+                {topRight && <img src={topRight} alt="Top right" loading="lazy" decoding="async" />}
+              </div>
+            </div>
+          ) : (
+            <div className="circle" style={{ width: '55%', height: '25%', ['--pad-x']: '1.2vmin' }}>
+              {topRight && <img src={topRight} alt="Top right" loading="lazy" decoding="async" />}
+            </div>
+          )}
         </div>
 
+        {/* BL with number2 */}
         <div className="item -type2 -bl">
           <div className="line" />
           <div className="dot" />
-          <div className="circle" style={{ width: '25%', height: '25%' }}>
-            {bottomLeft && <img src={bottomLeft} alt="Bottom left" loading="lazy" decoding="async" />}
-          </div>
+          {has2 ? (
+            <div className="circle -numCard">
+              <span className="bigNum">{number2}</span>
+              <div className="iconBox">
+                {bottomLeft && <img src={bottomLeft} alt="Bottom left" loading="lazy" decoding="async" />}
+              </div>
+            </div>
+          ) : (
+            <div className="circle" style={{ width: '25%', height: '25%' }}>
+              {bottomLeft && <img src={bottomLeft} alt="Bottom left" loading="lazy" decoding="async" />}
+            </div>
+          )}
         </div>
 
+        {/* BR */}
         <div className="item -type2 -br">
           <div className="line" />
           <div className="dot" />
