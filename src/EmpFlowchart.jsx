@@ -5,24 +5,17 @@ import { Global, keyframes } from '@emotion/react';
 const COLOR_BG = 'white';
 const COLOR_LINE = '#2b2929ff';
 const SPEED = '3.5s';
-const CORNER_R = '1.2vmin';          // радіус кута
+const CORNER_R = '1.2vmin';
 const PAR_GAP = '3vmin';
 const PAR_LEN = '45%';
 
-/* базові анімації */
 const moveDotStraight = keyframes({ '0%': { top: '10%' }, '25%': { top: '65%' }, '100%': { top: '65%' } });
 const moveDotStraightDeep = keyframes({ '0%': { top: '10%' }, '50%': { top: '82%' }, '100%': { top: '82%' } });
 const moveDotStraightDeeper = keyframes({ '0%': { top: '0%' }, '60%': { top: '82%' }, '100%': { top: '82%' } });
 const moveDotCorner = keyframes({ '0%': { top: '40%', left: 'calc(30% - 1px)' }, '45%': { top: '88%', left: 'calc(30% - 1px)' }, '100%': { top: '88%', left: 'calc(100% - 1px)' } });
 const moveDotCornerLeft = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
 const moveDotCornerRight = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
-
-const moveDotTLZig = keyframes({
-  '0%':   { top: '40.5%', left: 'calc(30% + 19%)' },
-  '22%':  { top: '40.5%', left: 'calc(56% + 1px)' },
-  '85%':  { top: '89%', left: 'calc(56% + 1px)' },
-  '100%': { top: '88%', left: '70%' },
-});
+const moveDotTLZig = keyframes({'0%':   { top: '40.5%', left: 'calc(30% + 16%)' },'22%':  { top: '40.5%', left: '56%' },'85%':  { top: '89%',   left: '56%' },'100%': { top: '88%',   left: '70%' },});
 
 const wrapper = {
   position: 'fixed',
@@ -44,6 +37,7 @@ const wrapper = {
     zIndex: 1,
     overflow: 'visible',
   },
+  
   '& > .item.-v-down': { transform: 'translateX(-50%) rotate(180deg)' },
 
   '& > .item > .line': {
@@ -141,10 +135,8 @@ const wrapper = {
   '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': { animation: `${moveDotCornerLeft} ${SPEED} linear infinite` },
   '& > .item.-type2.-tr > .dot::after, & > .item.-type2.-br > .dot::after': { animation: `${moveDotCornerRight} ${SPEED} linear infinite`, animationDirection: 'reverse' },
 
-  /* TL — верхній округлий кут + розділення вертикалі та низу,
-     щоб радіус унизу не «різав» верх */
+  /* TL — закруглений верх і низ */
   '& > .item.-type2.-tl': { '--cr': CORNER_R },
-  // верхня горизонталь + верхній правий заокруглений кут (як і було)
   '& > .item.-type2.-tl::before': {
     content: "''",
     position: 'absolute',
@@ -158,55 +150,44 @@ const wrapper = {
     background: 'transparent',
     zIndex: 0,
   },
-  // .line — тепер контейнер БЕЗ меж
-  '& > .item.-type2.-tl > .line': {
-    position: 'absolute',
-    top: 'calc(41% + var(--cr))',
-    left: '56%',
-    width: '44%',
-    height: 'calc(48% - var(--cr))',
-    border: 'none',
-  },
-  // ::before — чиста вертикаль (без радіусів), повна висота мінус радіус
-  '& > .item.-type2.-tl > .line::before': {
-    content: "''",
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: `calc(100% - var(--cr))`,
-    borderLeft: `2px dashed ${COLOR_LINE}`,
-  },
-  // ::after — нижня горизонталь + закруглення (чверть кола)
+  '& > .item.-type2.-tl > .line': { position: 'absolute', top: 'calc(41% + var(--cr))', left: '56%', width: '44%', height: 'calc(48% - var(--cr))', border: 'none' },
+  '& > .item.-type2.-tl > .line::before': { content: "''", position: 'absolute', top: 0, left: 0, height: `calc(100% - var(--cr))`, borderLeft: `2px dashed ${COLOR_LINE}` },
   '& > .item.-type2.-tl > .line::after': {
+    content: "''", position: 'absolute', bottom: 0, left: 0, width: '100%', height: 'var(--cr)',
+    borderLeft: `2px dashed ${COLOR_LINE}`, borderBottom: `2px dashed ${COLOR_LINE}`, borderBottomLeftRadius: 'var(--cr)', background: 'transparent',
+  },
+  '& > .item.-type2.-tl > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
+
+  /* TR — дзеркальне до TL (лягає праворуч від картки) */
+  '& > .item.-type2.-tr': { '--cr': CORNER_R, transform: 'scaleX(-1)' },
+  '& > .item.-type2.-tr::before': {
     content: "''",
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
+    top: 'calc(43% - var(--cr))',
+    left: 'calc(30% + 19%)',
+    width: 'calc(56% - (30% + 19%))',
     height: 'var(--cr)',
-    borderLeft: `2px dashed ${COLOR_LINE}`,
-    borderBottom: `2px dashed ${COLOR_LINE}`,
-    borderBottomLeftRadius: 'var(--cr)',
+    borderTop: `2px dashed ${COLOR_LINE}`,
+    borderRight: `2px dashed ${COLOR_LINE}`,
+    borderTopRightRadius: 'var(--cr)',
     background: 'transparent',
+    zIndex: 0,
   },
-
-  // рух крапки по тій самій траєкторії
-  '& > .item.-type2.-tl > .dot::after': {
-    left: 'calc(30% + 19% - 1px)',
-    top: '40%',
-    animation: `${moveDotTLZig} ${SPEED} linear infinite`,
+  '& > .item.-type2.-tr > .line': { position: 'absolute', top: 'calc(41% + var(--cr))', left: '56%', width: '44%', height: 'calc(48% - var(--cr))', border: 'none' },
+  '& > .item.-type2.-tr > .line::before': { content: "''", position: 'absolute', top: 0, left: 0, height: `calc(100% - var(--cr))`, borderLeft: `2px dashed ${COLOR_LINE}` },
+  '& > .item.-type2.-tr > .line::after': {
+    content: "''", position: 'absolute', bottom: 0, left: 0, width: '100%', height: 'var(--cr)',
+    borderLeft: `2px dashed ${COLOR_LINE}`, borderBottom: `2px dashed ${COLOR_LINE}`, borderBottomLeftRadius: 'var(--cr)', background: 'transparent',
+  },
+  // крапка йде «навпаки», тому reverse
+  '& > .item.-type2.-tr > .dot::after': {
+    left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite`, animationDirection: 'reverse',
   },
 
   /* TL картка */
   '& > .item.-type2.-tl > .circle': {
-    marginTop: '10%',
-    width: '38%',
-    height: '25%',
-    padding: '0 2vmin',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: '1.2vmin',
+    marginTop: '10%', width: '38%', height: '25%', padding: '0 2vmin',
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.2vmin',
   },
   '& > .item.-type2.-tl > .circle .iconBox': { height: '90%', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center' },
   '& > .item.-type2.-tl > .circle .iconBox > img': { height: '100%', width: 'auto', maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' },
@@ -214,34 +195,52 @@ const wrapper = {
 
   /* BL number2 */
   '& > .item.-type2.-bl > .circle.-numCard': {
-    width: 'fit-content', maxWidth: '44%', height: '25%',
-    padding: '0 2vmin', display: 'inline-flex', alignItems: 'center',
-    justifyContent: 'space-between', gap: '1.2vmin', transform: 'translate(-50%, -50%) scaleY(-1)',
+    width: 'fit-content', 
+    maxWidth: '44%', 
+    height: '25%', 
+    padding: '0 2vmin',
+    display: 'inline-flex', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    gap: '1.2vmin',
+    transform: 'translate(-50%, -50%) scaleY(-1)',
   },
   '& > .item.-type2.-bl > .circle.-numCard .iconBox': { height: '90%', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '0 0 auto' },
   '& > .item.-type2.-bl > .circle.-numCard .iconBox > img': { paddingLeft: '20%', height: '100%', width: 'auto', objectFit: 'contain' },
   '& > .item.-type2.-bl > .circle.-numCard .bigNum': { lineHeight: 1, fontWeight: 300, color: '#2b2b2b', fontSize: '7.2vmin', flex: '0 0 auto' },
 
-  /* TR number3 */
+  /* TR number3 (контент усередині вирівняний та «роздзеркалений») */
   '& > .item.-type2.-tr > .circle.-numCard': {
-    width: 'fit-content', maxWidth: '70%', height: '25%',
-    padding: '0 2vmin', display: 'inline-flex', alignItems: 'center',
-    justifyContent: 'space-between', gap: '1.2vmin', whiteSpace: 'nowrap',
+    width: 'fit-content', 
+    maxWidth: '70%', 
+    height: '25%', 
+    padding: '0 2vmin',
+    display: 'inline-flex', 
+    alignItems: 'center', 
+    justifyContent: 'space-between', 
+    gap: '1.2vmin',
+    whiteSpace: 'nowrap', 
     transform: 'translate(-50%, -50%) scaleX(-1)',
+    marginTop: '10%',
+    left: '14%'
   },
   '& > .item.-type2.-tr > .circle.-numCard .iconBox': { height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '1 1 0', minWidth: 0 },
   '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': { height: '100%', width: '100%', maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', objectPosition: 'center' },
-  '& > .item.-type2.-tr > .circle.-numCard .bigNum': { lineHeight: 1, fontWeight: 300, color: '#2b2b2b', fontSize: '7.2vmin', flex: '0 0 auto' },
+  '& > .item.-type2.-tr > .circle.-numCard .bigNum': { 
+    lineHeight: 1, 
+    fontWeight: 300, 
+    color: '#2b2b2b', 
+    fontSize: '7.2vmin', 
+    flex: '0 0 auto' 
+  },
 
   /* центр */
   '& > .center': { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', height: '55%', zIndex: 3 },
   '& > .center > .circle': { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: 12 },
   '& > .center > .circle:nth-child(1)': {
-    width: 'var(--center-w, 38%)', height: 'var(--center-h, 38%)',
-    minWidth: 'var(--center-min-w, 180px)', minHeight: 'var(--center-min-h, 140px)',
+    width: 'var(--center-w, 38%)', height: 'var(--center-h, 38%)', minWidth: 'var(--center-min-w, 180px)', minHeight: 'var(--center-min-h, 140px)',
     background: '#fff', boxShadow: '0 0 3vmin rgba(0,0,0,.1)', overflow: 'hidden',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box',
-    padding: 'var(--pad-y, 0) var(--pad-x, 0)'
+    display: 'flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', padding: 'var(--pad-y, 0) var(--pad-x, 0)',
   },
   '& > .center > .circle:nth-child(1) > img': { width: '80%', height: '100%', objectFit: 'contain', objectPosition: 'center' },
 };
