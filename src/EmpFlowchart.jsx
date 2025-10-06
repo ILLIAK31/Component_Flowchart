@@ -37,7 +37,7 @@ const wrapper = {
     zIndex: 1,
     overflow: 'visible',
   },
-  
+
   '& > .item.-v-down': { transform: 'translateX(-50%) rotate(180deg)' },
 
   '& > .item > .line': {
@@ -61,11 +61,20 @@ const wrapper = {
     animation: `${moveDotStraight} ${SPEED} linear infinite`,
   },
 
-  /* bottom main / parallel */
   '& > .item.-bottom-main > .dot::after': { animation: `${moveDotStraightDeep} ${SPEED} linear infinite` },
+
   '& > .item.-v-down > .circle > img': { transform: 'rotate(180deg)' },
-  '& > .item.-parallel': { left: `calc(50% + ${PAR_GAP})`, height: PAR_LEN, zIndex: 0 },
-  '& > .item.-parallel > .dot::after': { animation: `${moveDotStraightDeeper} ${SPEED} linear infinite`, animationDirection: 'reverse' },
+  
+  '& > .item.-parallel': { 
+    left: `calc(50% + ${PAR_GAP})`, 
+    height: PAR_LEN, 
+    zIndex: 0 
+  },
+  
+  '& > .item.-parallel > .dot::after': { 
+    animation: `${moveDotStraightDeeper} ${SPEED} linear infinite`, 
+    animationDirection: 'reverse' 
+  },
 
   /* картки */
   '& > .item > .circle, & > .item.-type2 > .circle': {
@@ -222,10 +231,21 @@ const wrapper = {
     whiteSpace: 'nowrap', 
     transform: 'translate(-50%, -50%) scaleX(-1)',
     marginTop: '10%',
-    left: '14%'
+    marginLeft: '-7%'
   },
   '& > .item.-type2.-tr > .circle.-numCard .iconBox': { height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '1 1 0', minWidth: 0 },
-  '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': { height: '100%', width: '100%', maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', objectPosition: 'center' },
+  
+  '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': { 
+    height: '90%', 
+    width: '100%', 
+    maxHeight: '100%', 
+    maxWidth: '100%', 
+    objectFit: 'contain', 
+    objectPosition: 'center',
+    paddingLeft: '20%',
+    paddingTop: '10%'
+  },
+  
   '& > .item.-type2.-tr > .circle.-numCard .bigNum': { 
     lineHeight: 1, 
     fontWeight: 300, 
@@ -242,7 +262,7 @@ const wrapper = {
     background: '#fff', boxShadow: '0 0 3vmin rgba(0,0,0,.1)', overflow: 'hidden',
     display: 'flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', padding: 'var(--pad-y, 0) var(--pad-x, 0)',
   },
-  '& > .center > .circle:nth-child(1) > img': { width: '80%', height: '100%', objectFit: 'contain', objectPosition: 'center' },
+  '& > .center > .circle:nth-child(1) > img': { width: '80%', height: '100%', objectFit: 'contain', objectPosition: 'center' }
 };
 
 export default function EmpFlowchart({ images = {} }) {
