@@ -15,7 +15,9 @@ const moveDotStraightDeeper = keyframes({ '0%': { top: '8%' }, '60%': { top: '82
 const moveDotCorner = keyframes({ '0%': { top: '40%', left: 'calc(30% - 1px)' }, '45%': { top: '88%', left: 'calc(30% - 1px)' }, '100%': { top: '88%', left: 'calc(100% - 1px)' } });
 const moveDotCornerLeft = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
 const moveDotCornerRight = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
-const moveDotTLZig = keyframes({'0%':   { top: '40.5%', left: 'calc(30% + 16%)' },'22%':  { top: '40.5%', left: '56%' },'85%':  { top: '89%',   left: '56%' },'100%': { top: '88%',   left: '70%' },});
+const moveDotTLZig = keyframes({ '0%': { top: '40.5%', left: 'calc(30% + 16%)' }, '22%': { top: '40.5%', left: '56.3%' }, '85%': { top: '88.8%', left: '56.3%' }, '100%': { top: '88.8%', left: '68%' }, });
+const moveDotBLZig = keyframes({ '0%': { top: '30.5%', left: 'calc(30% + 16%)' }, '22%': { top: '30.5%', left: '56.3%' }, '85%': { top: '88.8%', left: '56.3%' }, '100%': { top: '88.8%', left: '68%' }, });
+const moveDotBRZig = keyframes({ '0%': { top: '30.3%', left: 'calc(30% + 16%)' }, '22%': { top: '30.3%', left: '56.3%' }, '85%': { top: '88.8%', left: '56.3%' }, '100%': { top: '88.8%', left: '68%' }, });
 
 const wrapper = {
   position: 'fixed',
@@ -64,16 +66,16 @@ const wrapper = {
   '& > .item.-bottom-main > .dot::after': { animation: `${moveDotStraightDeep} ${SPEED} linear infinite` },
 
   '& > .item.-v-down > .circle > img': { transform: 'rotate(180deg)' },
-  
-  '& > .item.-parallel': { 
-    left: `calc(50% + ${PAR_GAP})`, 
-    height: PAR_LEN, 
-    zIndex: 0 
+
+  '& > .item.-parallel': {
+    left: `calc(50% + ${PAR_GAP})`,
+    height: PAR_LEN,
+    zIndex: 0
   },
-  
-  '& > .item.-parallel > .dot::after': { 
-    animation: `${moveDotStraightDeeper} ${SPEED} linear infinite`, 
-    animationDirection: 'reverse' 
+
+  '& > .item.-parallel > .dot::after': {
+    animation: `${moveDotStraightDeeper} ${SPEED} linear infinite`,
+    animationDirection: 'reverse'
   },
 
   /* картки */
@@ -133,9 +135,9 @@ const wrapper = {
     animation: `${moveDotCorner} ${SPEED} linear infinite`,
   },
 
-  '& > .item.-type2 > .circle': { 
-    top: '30%', 
-    left: '30%', 
+  '& > .item.-type2 > .circle': {
+    top: '30%',
+    left: '30%',
     transform: 'translate(-50%, -50%)',
     minWidth: '50%'
   },
@@ -201,12 +203,12 @@ const wrapper = {
 
   /* TL картка */
   '& > .item.-type2.-tl > .circle': {
-    marginTop: '10%', 
-    width: '50%', 
-    height: '25%', 
+    marginTop: '10%',
+    width: '50%',
+    height: '25%',
     padding: '0 2vmin',
-    display: 'flex', 
-    alignItems: 'center', 
+    display: 'flex',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginLeft: '-7%'
   },
@@ -217,98 +219,285 @@ const wrapper = {
 
   /* BL number2 */
   '& > .item.-type2.-bl > .circle.-numCard': {
-    width: '50%', 
-    maxWidth: '50%', 
-    height: '25%', 
+    width: '50%',
+    maxWidth: '50%',
+    height: '25%',
     padding: '0 2vmin',
-    display: 'inline-flex', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: '1.2vmin',
     transform: 'translate(-50%, -50%) scaleY(-1)',
+    marginLeft: '-7%'
   },
-  
-  '& > .item.-type2.-bl > .circle.-numCard .iconBox': { height: '90%', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '0 0 auto' },
-  '& > .item.-type2.-bl > .circle.-numCard .iconBox > img': { paddingLeft: '20%', height: '100%', width: 'auto', objectFit: 'contain' },
+
+  '& > .item.-type2.-bl > .circle.-numCard .iconBox': {
+    height: '90%',
+    aspectRatio: '1 / 1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '0 0 auto'
+  },
+
+  '& > .item.-type2.-bl > .circle.-numCard .iconBox > img': {
+    paddingLeft: '20%',
+    height: '100%',
+    width: 'auto',
+    objectFit: 'contain'
+  },
+
   '& > .item.-type2.-bl > .circle.-numCard .bigNum': { lineHeight: 1, fontWeight: 300, color: '#2b2b2b', fontSize: '7.2vmin', flex: '0 0 auto' },
 
-  /* TR number3 (контент усередині вирівняний та «роздзеркалений») */
   '& > .item.-type2.-tr > .circle.-numCard': {
-    width: '50%', 
-    height: '25%', 
+    width: '50%',
+    height: '25%',
     padding: '0 2vmin',
-    display: 'inline-flex', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     gap: '1.2vmin',
-    whiteSpace: 'nowrap', 
+    whiteSpace: 'nowrap',
     transform: 'translate(-50%, -50%) scaleX(-1)',
     marginTop: '10%',
     marginLeft: '-7%'
   },
-  '& > .item.-type2.-tr > .circle.-numCard .iconBox': { height: '90%', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: '1 1 0', minWidth: 0 },
-  
-  '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': { 
-    height: '90%', 
-    width: '100%', 
-    maxHeight: '100%', 
-    maxWidth: '100%', 
-    objectFit: 'contain', 
+
+  '& > .item.-type2.-tr > .circle.-numCard .iconBox': {
+    height: '90%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '1 1 0',
+    minWidth: 0
+  },
+
+  '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': {
+    height: '90%',
+    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    objectFit: 'contain',
     objectPosition: 'center',
     paddingLeft: '20%',
     paddingTop: '15%'
   },
-  
-  '& > .item.-type2.-tr > .circle.-numCard .bigNum': { 
-    lineHeight: 1, 
-    fontWeight: 300, 
-    color: '#2b2b2b', 
-    fontSize: '7.2vmin', 
-    flex: '0 0 auto' 
+
+  '& > .item.-type2.-tr > .circle.-numCard .bigNum': {
+    lineHeight: 1,
+    fontWeight: 300,
+    color: '#2b2b2b',
+    fontSize: '7.2vmin',
+    flex: '0 0 auto'
   },
 
-  /* центр */
-  '& > .center': { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '90%', height: '55%', zIndex: 3 },
-  '& > .center > .circle': { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', borderRadius: 12 },
+  '& > .center': {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90%',
+    height: '55%',
+    zIndex: 3
+  },
+
+  '& > .center > .circle': {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: 12
+  },
+
   '& > .center > .circle:nth-child(1)': {
-    width: 'var(--center-w, 38%)', height: 'var(--center-h, 38%)', minWidth: 'var(--center-min-w, 180px)', minHeight: 'var(--center-min-h, 140px)',
-    background: '#fff', boxShadow: '0 0 3vmin rgba(0,0,0,.1)', overflow: 'hidden',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', boxSizing: 'border-box', padding: 'var(--pad-y, 0) var(--pad-x, 0)',
+    width: 'var(--center-w, 38%)',
+    height: 'var(--center-h, 38%)',
+    minWidth: 'var(--center-min-w, 180px)',
+    minHeight: 'var(--center-min-h, 140px)',
+    background: '#fff',
+    boxShadow: '0 0 3vmin rgba(0,0,0,.1)',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxSizing: 'border-box',
+    padding: 'var(--pad-y, 0) var(--pad-x, 0)'
   },
-  '& > .center > .circle:nth-child(1) > img': { width: '80%', height: '100%', objectFit: 'contain', objectPosition: 'center' },
 
-  /* вирівнюємо нижній центральний квадрат по висоті з BL/BR */
-'& > .item.-bottom-main > .circle': {
-  top: '17.3%',
-  height: '25% !important'
-},
+  '& > .center > .circle:nth-child(1) > img': {
+    width: '80%',
+    height: '100%',
+    objectFit: 'contain',
+    objectPosition: 'center'
+  },
 
-/* вкоротити ліву вертикаль під нижньою карткою */
-'& > .item.-bottom-main.-v-down > .line': {
-  position: 'absolute',
-  top: 0,
-  bottom: '35%',          // підбери 20–30% під свій макет
-  height: 'auto !important', // перекриває базове height:100%
-  width: '53%',
-  borderRight: `2px dashed ${COLOR_LINE}`,
-},
-/* ліва вертикаль під нижньою карткою — підняти вище */
-'& > .item.-bottom-main.-v-down > .line': {
-  position: 'absolute',
-  top: '25% !important',          // було 0 — від’ємне значення піднімає лінію
-  bottom: '18%',       // залиш як підрізку знизу (підбери 20–30%)
-  height: 'auto !important',
-  width: '53%',
-  borderRight: `2px dashed ${COLOR_LINE}`,
-},
+  '& > .item.-bottom-main > .circle': {
+    top: '17.4%',
+    height: '25% !important',
+    width: '50% !important'
+  },
 
+  '& > .item.-bottom-main.-v-down > .line': {
+    position: 'absolute',
+    top: '25% !important',
+    bottom: '18%',
+    height: 'auto !important'
+  },
 
+  '& > .item.-type2.-br > .circle.-numCard .iconBox > img': {
+    height: '100%',
+    width: 'auto',
+    objectFit: 'contain',
+    objectPosition: 'left'
+  },
+
+  '& > .item.-type2.-br > .circle.-numCard': {
+    width: 'fit-content',
+    maxWidth: '50%',
+    height: '25%',
+    padding: '0 2vmin',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '20%',
+    transform: 'translate(-50%, -50%) scaleX(-1) scaleY(-1)',
+    marginLeft: '-7%'
+  },
+
+  '& > .item.-type2.-br > .circle.-numCard .iconBox': {
+    height: '90%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '1 1 0'
+  },
+
+  '& > .item.-type2.-br > .circle.-numCard .bigNum': {
+    fontWeight: 300,
+    color: '#2b2b2b',
+    fontSize: '7vmin',
+    flex: '0 0 auto'
+  },
+
+  '& > .item.-type2.-bl': { 
+    '--cr': CORNER_R, 
+    transform: 'scaleY(-1)' 
+  },
+
+  '& > .item.-type2.-bl::before': {
+    content: "''",
+    position: 'absolute',
+    top: 'calc(32.5% - var(--cr))',
+    left: 'calc(30% + 19%)',
+    width: 'calc(56% - (30% + 19%))',
+    height: 'var(--cr)',
+    borderTop: `2px dashed ${COLOR_LINE}`,
+    borderRight: `2px dashed ${COLOR_LINE}`,
+    borderTopRightRadius: 'var(--cr)',
+    background: 'transparent',
+    zIndex: 0
+  },
+
+  '& > .item.-type2.-bl > .line': {
+    position: 'absolute',
+    top: 'calc(31% + var(--cr))',
+    left: '56%',
+    width: '44%',
+    height: 'calc(58% - var(--cr))',
+    border: 'none'
+  },
+
+  '& > .item.-type2.-bl > .line::before': {
+    content: "''",
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: `calc(100% - var(--cr))`,
+    borderLeft: `2px dashed ${COLOR_LINE}`
+  },
+
+  '& > .item.-type2.-bl > .line::after': {
+    content: "''",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: 'var(--cr)',
+    borderLeft: `2px dashed ${COLOR_LINE}`,
+    borderBottom: `2px dashed ${COLOR_LINE}`,
+    borderBottomLeftRadius: 'var(--cr)',
+    background: 'transparent'
+  },
+
+  '& > .item.-type2.-bl > .dot::after': {
+    left: 'calc(30% + 19% - 1px)',
+    top: '40%',
+    animation: `${moveDotBLZig} ${SPEED} linear infinite`
+  },
+
+  '& > .item.-type2.-br': { 
+    '--cr': CORNER_R, 
+    transform: 'scaleX(-1) scaleY(-1)' 
+  },
+
+  '& > .item.-type2.-br::before': {
+    content: "''",
+    position: 'absolute',
+    top: 'calc(32.5% - var(--cr))',
+    left: 'calc(30% + 19%)',
+    width: 'calc(56% - (30% + 19%))',
+    height: 'var(--cr)',
+    borderTop: `2px dashed ${COLOR_LINE}`,
+    borderRight: `2px dashed ${COLOR_LINE}`,
+    borderTopRightRadius: 'var(--cr)',
+    background: 'transparent',
+    zIndex: 0
+  },
+
+  '& > .item.-type2.-br > .line': {
+    position: 'absolute',
+    top: 'calc(31% + var(--cr))',
+    left: '56%',
+    width: '44%',
+    height: 'calc(58% - var(--cr))',
+    border: 'none'
+  },
+
+  '& > .item.-type2.-br > .line::before': {
+    content: "''",
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: `calc(100% - var(--cr))`,
+    borderLeft: `2px dashed ${COLOR_LINE}`
+  },
+
+  '& > .item.-type2.-br > .line::after': {
+    content: "''",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: 'var(--cr)',
+    borderLeft: `2px dashed ${COLOR_LINE}`,
+    borderBottom: `2px dashed ${COLOR_LINE}`,
+    borderBottomLeftRadius: 'var(--cr)',
+    background: 'transparent'
+  },
+
+  '& > .item.-type2.-br > .dot::after': {
+    left: 'calc(30% + 19% - 1px)',
+    top: '40%',
+    animation: `${moveDotBRZig} ${SPEED} linear infinite`,
+    animationDirection: 'reverse'
+  }
 };
 
 export default function EmpFlowchart({ images = {} }) {
-  const { topLeft, topRight, bottomLeft, bottomRight, bottomCenter, center, number1, number2, number3 } = images;
+  const { topLeft, topRight, bottomLeft, bottomRight, bottomCenter, center, number1, number2, number3, number4 } = images;
   const has2 = number2 != null;
   const has3 = number3 != null;
+  const has4 = number4 != null;
 
   return (
     <>
@@ -380,9 +569,18 @@ export default function EmpFlowchart({ images = {} }) {
         <div className="item -type2 -br">
           <div className="line" />
           <div className="dot" />
-          <div className="circle" style={{ width: '25%', height: '25%' }}>
-            {bottomRight && <img src={bottomRight} alt="Bottom right" loading="lazy" decoding="async" />}
-          </div>
+          {has4 ? (
+            <div className="circle -numCard">
+              <span className="bigNum">{number4}</span>
+              <div className="iconBox">
+                {bottomRight && <img src={bottomRight} alt="Bottom right" loading="lazy" decoding="async" />}
+              </div>
+            </div>
+          ) : (
+            <div className="circle" style={{ width: '25%', height: '25%' }}>
+              {bottomRight && <img src={bottomRight} alt="Bottom right" loading="lazy" decoding="async" />}
+            </div>
+          )}
         </div>
 
         {/* center */}

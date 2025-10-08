@@ -21,7 +21,8 @@ export default function App() {
         center: center,
         number1 : 6,
         number2 : 3,
-        number3 : 30
+        number3 : 30,
+        number4 : 2
       }}
     />
   )
