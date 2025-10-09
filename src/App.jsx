@@ -6,7 +6,7 @@ import topLeft from './assets/Img1.png';
 import topRight from './assets/Img_B2B.png';
 import bottomLeft from './assets/Img2.png';
 import bottomRight from './assets/Img3.png';
-import bottomCenter from './assets/Img_Enova365.png';
+import bottomCenter from './assets/Img_ERP2.png';
 import center from './assets/Img_Emp.png';
 
 export default function App() {
