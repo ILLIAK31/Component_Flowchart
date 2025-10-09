@@ -33,7 +33,7 @@ const wrapper = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   height: '90vmin',
-  width: '80%',
+  width: '180vmin',
 
   '& > .item': {
     position: 'absolute',
@@ -205,7 +205,7 @@ const wrapper = {
   },
   // крапка йде «навпаки», тому reverse
   '& > .item.-type2.-tr > .dot::after': {
-    left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite`, animationDirection: 'reverse',
+    left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite`
   },
 
   /* TL картка */
@@ -409,7 +409,7 @@ const wrapper = {
 
   '& > .item.-type2.-bl > .line': {
     position: 'absolute',
-    top: 'calc(39% + var(--cr))',
+    top: 'calc(40% + var(--cr))',
     left: '55%',
     width: '44%',
     height: 'calc(48% - var(--cr))',
@@ -465,7 +465,7 @@ const wrapper = {
 
   '& > .item.-type2.-br > .line': {
     position: 'absolute',
-    top: 'calc(39% + var(--cr))',
+    top: 'calc(40% + var(--cr))',
     left: '55%',
     width: '43%',
     height: 'calc(48% - var(--cr))',
@@ -506,7 +506,6 @@ const wrapper = {
     top: '20%',  
     left: '-2%',
   }
-
 };
 
 export default function EmpFlowchart({ images = {} }) {
