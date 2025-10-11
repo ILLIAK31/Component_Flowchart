@@ -16,8 +16,8 @@ const moveDotStraightDeeper = keyframes({ '0%': { top: '8%',left:'50.1%' }, '60%
 const moveDotCorner = keyframes({ '0%': { top: '40%', left: 'calc(30% - 1px)' }, '45%': { top: '88%', left: 'calc(30% - 1px)' }, '100%': { top: '88%', left: 'calc(100% - 1px)' } });
 const moveDotCornerLeft = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
 const moveDotCornerRight = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
-const moveDotBLZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: 'calc(55% + 1px)' }, '70%': { top: '86.8%', left: 'calc(55% + 1px)' }, '100%': { top: '86.8%', left: '80%' }, });
-const moveDotBRZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: '55%' }, '70%': { top: '86.8%', left: '55%' }, '100%': { top: '86.8%', left: '80%' }, });
+const moveDotBLZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: 'calc(55% + 1px)' }, '70%': { top: '88%', left: 'calc(55% + 1px)' }, '100%': { top: '88%', left: '80%' }, });
+const moveDotBRZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: '55%' }, '70%': { top: '88%', left: '55%' }, '100%': { top: '88%', left: '80%' }, });
 
 const moveDotTLZig = keyframes({
   '0%': { top: '40.5%', left: 'calc(5% + 19%)' }, // уздовж верхньої ділянки від картки
@@ -618,3 +618,4 @@ export default function EmpFlowchart({ images = {} }) {
     </>
   );
 }
+
