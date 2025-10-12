@@ -8,6 +8,9 @@ import bottomLeft from './assets/Img2.png';
 import bottomRight from './assets/Img3.png';
 import bottomCenter from './assets/Img_ERP2.png';
 import center from './assets/Img_Emp.png';
+import icon1 from './assets/Icon1.png';
+import icon2 from './assets/Icon2.png';
+import icon3 from './assets/Icon3.png';
 
 export default function App() {
   return (
@@ -22,7 +25,18 @@ export default function App() {
         number1 : 6,
         number2 : 3,
         number3 : 30,
-        number4 : 2
+        number4 : 2,
+        icon1: icon1,
+        icon2: icon2,
+        icon3: icon3,
+        stat1: 1356000,
+        stat2: 17,
+        stat3: 18,
+        stat2_1: 932040,
+        stat2_2: 17,
+        stat3_1: 756000,
+        stat3_2: 14,
+        stat3_3: 11
       }}
     />
   )
