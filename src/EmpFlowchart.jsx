@@ -116,7 +116,6 @@ const wrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
     background: COLOR_BG,
     overflow: 'hidden',
     boxShadow: '0 0 3vmin rgba(0,0,0,.15)',
@@ -698,12 +697,12 @@ const wrapper = {
     pointerEvents: 'none',
   },
 
-  '& > .item.-type2.-tr > .arrow-tr': {
+  '& > .arrows-layer > .arrow-tr': {
     position: 'absolute',
-    top: '89%',
-    left: '77.9%',
-    transform: 'translate(-40%, -50%)',
-    width: '3%',  // ← головне: зменшується разом з екраном
+    top: '44.5%',
+    left: '60.2%',
+    transform: 'translate(-40%, -50%) rotate(180deg)',
+    width: '1.5%',  // ← головне: зменшується разом з екраном
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -851,7 +850,6 @@ export default function EmpFlowchart({ images = {} }) {
                     {topRight && <img src={topRight} alt="Top right" loading="lazy" decoding="async" />}
                   </div>
                 )}
-                {arrow && <img className="arrow-tr" src={arrow} alt="" loading="lazy" decoding="async" />}
                 {(stat2_1 != null || stat2_2 != null) && (
                   <div className="stats">
                     {stat2_1 != null && (
@@ -956,11 +954,15 @@ export default function EmpFlowchart({ images = {} }) {
               </div>
 
               <div className="arrows-layer">
-              {arrow && <img className="arrow-bl" src={arrow} alt="" loading="lazy" decoding="async" />}
+                {arrow && <img className="arrow-bl" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               <div className="arrows-layer">
-              {arrow && <img className="arrow-b" src={arrow} alt="" loading="lazy" decoding="async" />}
+                {arrow && <img className="arrow-b" src={arrow} alt="" loading="lazy" decoding="async" />}
+              </div>
+
+              <div className="arrows-layer">
+                {arrow && <img className="arrow-tr" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               {/* center */}
