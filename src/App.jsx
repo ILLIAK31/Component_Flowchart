@@ -11,6 +11,7 @@ import center from './assets/Img_Emp.png';
 import icon1 from './assets/Icon1.png';
 import icon2 from './assets/Icon2.png';
 import icon3 from './assets/Icon3.png';
+import arrow from './assets/arrow.png';
 
 export default function App() {
   return (
@@ -40,7 +41,8 @@ export default function App() {
         stat4_1: 62011,
         stat4_2: 4,
         stat5_1: 756000,
-        stat5_2: 488012
+        stat5_2: 488012,
+        arrow: arrow
       }}
     />
   )

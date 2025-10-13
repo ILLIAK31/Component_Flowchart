@@ -33,7 +33,7 @@ const LINE_W = 1;
 
 const moveDotStraight = keyframes({ '0%': { top: '10%' }, '25%': { top: '65%' }, '100%': { top: '65%' } });
 const moveDotStraightDeep = keyframes({ '0%': { top: '30%', left: '54%' }, '50%': { top: '82%', left: '54%' }, '100%': { top: '82%', left: '54%' } });
-const moveDotStraightDeeper = keyframes({ '0%': { top: '8%', left: '50.1%' }, '60%': { top: '82%', left: '50.1%' }, '100%': { top: '82%', left: '50.1%' } });
+const moveDotStraightDeeper = keyframes({ '0%': { top: '10%', left: '50.1%' }, '60%': { top: '82%', left: '50.1%' }, '100%': { top: '82%', left: '50.1%' } });
 const moveDotCorner = keyframes({ '0%': { top: '40%', left: 'calc(30% - 1px)' }, '45%': { top: '88%', left: 'calc(30% - 1px)' }, '100%': { top: '88%', left: 'calc(100% - 1px)' } });
 const moveDotCornerLeft = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
 const moveDotCornerRight = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
@@ -41,8 +41,8 @@ const moveDotBLZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' },
 const moveDotBRZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: '55%' }, '70%': { top: '88%', left: '55%' }, '100%': { top: '88%', left: '80%' } });
 
 const moveDotTLZig = keyframes({
-  '0%': { top: '40.5%', left: 'calc(5% + 19%)' },
-  '30%': { top: '40.5%', left: '55%' },
+  '0%': { top: '40.6%', left: 'calc(5% + 19%)' },
+  '30%': { top: '40.6%', left: '55%' },
   '70%': { top: '89%', left: '55%' },
   '100%': { top: '89%', left: '80%' },
 });
@@ -635,41 +635,112 @@ const wrapper = {
   },
 
   '& > .erp-stats': {
-  position: 'absolute',
-  left: '61.5%',
-  top: '88%',                      // можна 84–88%, якщо треба вище/нижче
-  transform: 'translateX(-50%)',
-  display: 'grid',
-  rowGap: '0.8vmin',
-  width: '40%',
-  pointerEvents: 'none',
-  zIndex: 9999,                    // було 3 — цього замало через трансформації
-},
-'& > .erp-stats .row': {
-  display: 'inline-flex',
-  alignItems: 'baseline',
-  gap: '0.6vmin',
-  lineHeight: 1.1,
-  whiteSpace: 'nowrap',
-},
-'& > .erp-stats .label': {
-  fontWeight: 700,
-  fontSize: 'clamp(12px, 2.1vmin, 22px)',
-  color: '#9397a1',
-  letterSpacing: '0.02em',
-},
-'& > .erp-stats .val': {
-  fontSize: 'clamp(14px, 2.5vmin, 26px)',
-  color: '#fc4d57',
-  fontWeight: 800,
-  display: 'inline-block',
-},
-'& > .erp-stats .suffix': {
-  fontWeight: 600,
-  fontSize: 'clamp(12px, 1.9vmin, 22px)',
-  color: '#9397a1',
-},
+    position: 'absolute',
+    left: '61.5%',
+    top: '88%',                      // можна 84–88%, якщо треба вище/нижче
+    transform: 'translateX(-50%)',
+    display: 'grid',
+    rowGap: '0.8vmin',
+    width: '40%',
+    pointerEvents: 'none',
+    zIndex: 9999,                    // було 3 — цього замало через трансформації
+  },
+  '& > .erp-stats .row': {
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    gap: '0.6vmin',
+    lineHeight: 1.1,
+    whiteSpace: 'nowrap',
+  },
+  '& > .erp-stats .label': {
+    fontWeight: 700,
+    fontSize: 'clamp(12px, 2.1vmin, 22px)',
+    color: '#9397a1',
+    letterSpacing: '0.02em',
+  },
+  '& > .erp-stats .val': {
+    fontSize: 'clamp(14px, 2.5vmin, 26px)',
+    color: '#fc4d57',
+    fontWeight: 800,
+    display: 'inline-block',
+  },
+  '& > .erp-stats .suffix': {
+    fontWeight: 600,
+    fontSize: 'clamp(12px, 1.9vmin, 22px)',
+    color: '#9397a1',
+  },
 
+  '& > .arrows-layer': {
+    position: 'absolute',
+    inset: 0,
+    pointerEvents: 'none',
+    zIndex: 10,          // поверх центру
+  },
+
+  /* === TL ARROW (responsive) === */
+  '& > .arrows-layer > .arrow': {
+    position: 'absolute',
+    top: '44.5%',
+    left: '39.5%',
+    transform: 'translate(-40%, -50%)',
+    width: '1.5%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+  },
+
+  '& > .arrows-layer > .arrow-bl': {
+    position: 'absolute',
+    top: '56.1%',
+    left: '39.5%',
+    transform: 'translate(-40%, -50%)',
+    width: '1.5%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+    zIndex: 4,
+    pointerEvents: 'none',
+  },
+
+  '& > .item.-type2.-tr > .arrow-tr': {
+    position: 'absolute',
+    top: '89%',
+    left: '77.9%',
+    transform: 'translate(-40%, -50%)',
+    width: '3%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+    zIndex: 4,
+    pointerEvents: 'none',
+  },
+
+  '& > .item.-type2.-br > .arrow-br': {
+    position: 'absolute',
+    top: '39.8%',
+    left: '27%',
+    transform: 'translate(-40%, -50%) rotate(180deg)',
+    width: '3%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+    zIndex: 4,
+    pointerEvents: 'none',
+  },
+
+  '& >  .arrows-layer > .arrow-b': {
+    position: 'absolute',
+    top: '60.5%',
+    left: '47.8%',
+    transform: 'translate(-40%, -50%) rotate(270deg)',
+    width: '1.5%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+    zIndex: 4,
+    pointerEvents: 'none',
+  },
+
+  '& >  .item.-bottom-main.-v-down > .arrow-bc': {
+    position: 'absolute',
+    top: '54%',
+    left: '46%',
+    transform: 'translate(-40%, -50%) rotate(270deg)',
+    width: '3%',  // ← головне: зменшується разом з екраном
+    height: 'auto',
+    zIndex: 4,
+    pointerEvents: 'none',
+  },
 };
 
 /* Заповнення рамки */
@@ -689,7 +760,7 @@ export default function EmpFlowchart({ images = {} }) {
     icon1, icon2, icon3, stat1, stat2,
     stat3, stat2_1, stat2_2, stat3_1,
     stat3_2, stat3_3, stat4_1, stat4_2,
-    stat5_1, stat5_2
+    stat5_1, stat5_2, arrow
   } = images;
 
   const has2 = number2 != null;
@@ -704,7 +775,6 @@ export default function EmpFlowchart({ images = {} }) {
   return (
     <>
       <Global styles={{ body: { margin: 0, background: 'white', fontFamily: '"Open Sans", system-ui' } }} />
-
       <div style={stage}>
         <div style={frame}>
           <div style={{ position: 'absolute', inset: 0 }}>
@@ -719,6 +789,7 @@ export default function EmpFlowchart({ images = {} }) {
                 <div className="circle" style={{ width: '55%', height: '20%', ['--pad-x']: '1.2vmin' }}>
                   {bottomCenter && <img src={bottomCenter} alt="Bottom center" loading="lazy" decoding="async" />}
                 </div>
+                {arrow && <img className="arrow-bc" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               {/* bottom parallel */}
@@ -737,7 +808,6 @@ export default function EmpFlowchart({ images = {} }) {
                   <span className="bigNum">{number1}</span>
                   <div className="iconBox">{topLeft && <img src={topLeft} alt="Top left" loading="lazy" decoding="async" />}</div>
                 </div>
-
                 {(icon1 || icon2 || icon3) && (stat1 != null || stat2 != null || stat3 != null) && (
                   <div className="stats">
                     {stat1 != null && (
@@ -781,7 +851,7 @@ export default function EmpFlowchart({ images = {} }) {
                     {topRight && <img src={topRight} alt="Top right" loading="lazy" decoding="async" />}
                   </div>
                 )}
-
+                {arrow && <img className="arrow-tr" src={arrow} alt="" loading="lazy" decoding="async" />}
                 {(stat2_1 != null || stat2_2 != null) && (
                   <div className="stats">
                     {stat2_1 != null && (
@@ -861,7 +931,7 @@ export default function EmpFlowchart({ images = {} }) {
                     {bottomRight && <img src={bottomRight} alt="Bottom right" loading="lazy" decoding="async" />}
                   </div>
                 )}
-
+                {arrow && <img className="arrow-br" src={arrow} alt="" loading="lazy" decoding="async" />}
                 {(stat4_1 != null || stat4_2 != null) && (
                   <div className="stats">
                     {stat4_1 != null && (
@@ -879,6 +949,18 @@ export default function EmpFlowchart({ images = {} }) {
                     )}
                   </div>
                 )}
+              </div>
+
+              <div className="arrows-layer">
+                {arrow && <img className="arrow" src={arrow} alt="" loading="lazy" decoding="async" />}
+              </div>
+
+              <div className="arrows-layer">
+              {arrow && <img className="arrow-bl" src={arrow} alt="" loading="lazy" decoding="async" />}
+              </div>
+
+              <div className="arrows-layer">
+              {arrow && <img className="arrow-b" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               {/* center */}
