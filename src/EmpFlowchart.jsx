@@ -517,14 +517,14 @@ const wrapper = {
   },
 
   '& > .item.-bottom-main > .circle': {
-    top: '25%',
+    top: '28%',
     height: '25% !important',
     width: '35% !important'
   },
 
   '& > .item.-bottom-main.-v-down > .line': {
     position: 'absolute',
-    top: '25% !important',
+    top: '30% !important',
     bottom: '18%',
     height: 'auto !important',
     left: '2%',
@@ -637,7 +637,7 @@ const wrapper = {
   '& > .erp-stats': {
   position: 'absolute',
   left: '61.5%',
-  top: '90%',                      // можна 84–88%, якщо треба вище/нижче
+  top: '88%',                      // можна 84–88%, якщо треба вище/нижче
   transform: 'translateX(-50%)',
   display: 'grid',
   rowGap: '0.8vmin',
