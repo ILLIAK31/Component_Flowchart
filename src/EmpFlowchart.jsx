@@ -16,7 +16,6 @@ const stage = {
   overflow: 'hidden',
 };
 
-// 2:1 рамка; враховує обидва падінги
 const frame = {
   width: `min(calc(100vw - (2 * ${PAD_X})), calc((100vh - (2 * ${PAD_Y})) * 2))`,
   aspectRatio: '2 / 1',
@@ -181,7 +180,7 @@ const wrapper = {
   '& > .item.-type2.-tl > .dot::after, & > .item.-type2.-bl > .dot::after': { animation: `${moveDotCornerLeft} ${SPEED} linear infinite` },
   '& > .item.-type2.-tr > .dot::after, & > .item.-type2.-br > .dot::after': { animation: `${moveDotCornerRight} ${SPEED} linear infinite`, animationDirection: 'reverse' },
 
-  /* TL — закруглений верх і низ */
+  /* TL — закруглення + допоміжні лінії */
   '& > .item.-type2.-tl': { '--cr': CORNER_R },
   '& > .item.-type2.-tl::before': {
     content: "''",
@@ -204,7 +203,7 @@ const wrapper = {
   },
   '& > .item.-type2.-tl > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
 
-  /* TR — дзеркальне до TL */
+  /* TR — дзеркало до TL */
   '& > .item.-type2.-tr': { '--cr': CORNER_R, transform: 'scaleX(-1)' },
   '& > .item.-type2.-tr::before': {
     content: "''",
@@ -238,12 +237,11 @@ const wrapper = {
     justifyContent: 'space-between',
     marginLeft: '-20%'
   },
-
   '& > .item.-type2.-tl > .circle .iconBox': { height: '90%', aspectRatio: '1 / 1', display: 'flex', alignItems: 'center', justifyContent: 'center' },
   '& > .item.-type2.-tl > .circle .iconBox > img': { height: '100%', width: 'auto', maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', marginRight: '15%' },
   '& > .item.-type2.-tl > .circle .bigNum': { lineHeight: 1, fontWeight: 300, color: '#2b2b2b', fontSize: '5vmin', flexShrink: 0, marginLeft: '15%' },
 
-  /* === TL: блок статистики під верхнім лівим боксом === */
+  /* === TL STATS === */
   '& > .item.-type2.-tl > .stats': {
     position: 'absolute',
     left: '10%',
@@ -257,9 +255,9 @@ const wrapper = {
   },
   '& > .item.-type2.-tl > .stats .row': {
     display: 'grid',
-    gridTemplateColumns: 'auto 1fr auto',
+    gridTemplateColumns: 'auto max-content auto',
     alignItems: 'center',
-    columnGap: '1.2vmin',
+    columnGap: '0.8vmin',
     lineHeight: 1.1,
   },
   '& > .item.-type2.-tl > .stats .row.-pair': {
@@ -280,6 +278,7 @@ const wrapper = {
     fontSize: 'clamp(14px, 2.5vmin, 26px)',
     color: '#fc4d57',
     fontWeight: 800,
+    display: 'inline-block',
   },
   '& > .item.-type2.-tl > .stats .suffix': {
     fontWeight: 600,
@@ -287,12 +286,12 @@ const wrapper = {
     color: '#9397a1',
   },
 
-  /* === TR: блок статистики під правим верхнім боксом === */
+  /* === TR STATS (icon1+stat2_1, icon2+stat2_2) === */
   '& > .item.-type2.-tr > .stats': {
     position: 'absolute',
     right: '90%',
     top: 'calc(40% + 18%)',
-    transform: 'translate(50%, 0) scaleX(-1)', // антимиррор для тексту/іконок
+    transform: 'translate(50%, 0) scaleX(-1)',
     display: 'grid',
     rowGap: '1vmin',
     width: '34%',
@@ -317,8 +316,92 @@ const wrapper = {
     fontSize: 'clamp(14px, 2.5vmin, 26px)',
     color: '#fc4d57',
     fontWeight: 800,
+    display: 'inline-block',
   },
   '& > .item.-type2.-tr > .stats .suffix': {
+    fontWeight: 600,
+    fontSize: 'clamp(12px, 1.9vmin, 22px)',
+    color: '#9397a1',
+  },
+
+  /* === BL STATS (icon1+stat3_1, icon2+stat3_2, icon3+stat3_3) === */
+  '& > .item.-type2.-bl > .stats': {
+    position: 'absolute',
+    left: '10%',
+    top: 'calc(-10% + 18%)',
+    transform: 'translate(-50%, 0) scaleY(-1)',
+    display: 'grid',
+    rowGap: '1vmin',
+    width: '34%',
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  '& > .item.-type2.-bl > .stats .row': {
+    display: 'flex',
+    gridTemplateColumns: 'auto max-content auto',
+    alignItems: 'center',
+    columnGap: '0.8vmin',
+    lineHeight: 1.1,
+  },
+  '& > .item.-type2.-bl > .stats .row.-pair': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '2.2vmin',
+  },
+  '& > .item.-type2.-bl > .stats .grp': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.6vmin',
+  },
+  '& > .item.-type2.-bl > .stats .ico': {
+    height: 'clamp(16px, 2.6vmin, 28px)',
+    width: 'auto',
+  },
+  '& > .item.-type2.-bl > .stats .val': {
+    fontSize: 'clamp(14px, 2.5vmin, 26px)',
+    color: '#fc4d57',
+    fontWeight: 800,
+    display: 'inline-block',
+  },
+  '& > .item.-type2.-bl > .stats .suffix': {
+    fontWeight: 600,
+    fontSize: 'clamp(12px, 1.9vmin, 22px)',
+    color: '#9397a1',
+  },
+
+  /* === BR STATS (icon1+stat4_1, icon2+stat4_2) === */
+  '& > .item.-type2.-br > .stats': {
+    position: 'absolute',
+    right: '90%',
+    top: 'calc(-10% + 18%)',
+    transform: 'translate(50%, 0) scaleX(-1) scaleY(-1)',
+    display: 'grid',
+    rowGap: '1vmin',
+    width: '34%',
+    zIndex: 3,
+    pointerEvents: 'none',
+  },
+  '& > .item.-type2.-br > .stats .row': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.6vmin',
+    whiteSpace: 'nowrap',
+    lineHeight: 1.1,
+  },
+  '& > .item.-type2.-br > .stats .ico, & > .item.-type2.-br > .stats .val, & > .item.-type2.-br > .stats .suffix': {
+    flex: '0 0 auto',
+  },
+  '& > .item.-type2.-br > .stats .ico': {
+    height: 'clamp(16px, 2.6vmin, 28px)',
+    width: 'auto',
+  },
+  '& > .item.-type2.-br > .stats .val': {
+    fontSize: 'clamp(14px, 2.5vmin, 26px)',
+    color: '#fc4d57',
+    fontWeight: 800,
+    display: 'inline-block',
+  },
+  '& > .item.-type2.-br > .stats .suffix': {
     fontWeight: 600,
     fontSize: 'clamp(12px, 1.9vmin, 22px)',
     color: '#9397a1',
@@ -337,7 +420,6 @@ const wrapper = {
     marginLeft: '-20%',
     marginTop: '5%'
   },
-
   '& > .item.-type2.-bl > .circle.-numCard .iconBox': {
     height: '90%',
     aspectRatio: '1 / 1',
@@ -346,14 +428,12 @@ const wrapper = {
     justifyContent: 'center',
     flex: '0 0 auto'
   },
-
   '& > .item.-type2.-bl > .circle.-numCard .iconBox > img': {
     height: '100%',
     width: 'auto',
     objectFit: 'contain',
     marginRight: '15%'
   },
-
   '& > .item.-type2.-bl > .circle.-numCard .bigNum': { lineHeight: 1, fontWeight: 300, color: '#2b2b2b', fontSize: '5vmin', flex: '0 0 auto', marginLeft: '15%' },
 
   '& > .item.-type2.-tr > .circle.-numCard': {
@@ -369,7 +449,6 @@ const wrapper = {
     marginTop: '5%',
     marginLeft: '-20%'
   },
-
   '& > .item.-type2.-tr > .circle.-numCard .iconBox': {
     height: '90%',
     display: 'flex',
@@ -378,7 +457,6 @@ const wrapper = {
     flex: '1 1 0',
     minWidth: 0
   },
-
   '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': {
     height: '90%',
     width: '100%',
@@ -389,7 +467,6 @@ const wrapper = {
     paddingTop: '5%',
     marginRight: '-30% !important'
   },
-
   '& > .item.-type2.-tr > .circle.-numCard .bigNum': {
     lineHeight: 1,
     fontWeight: 300,
@@ -472,7 +549,6 @@ const wrapper = {
     marginLeft: '-20%',
     marginTop: '5%'
   },
-
   '& > .item.-type2.-br > .circle.-numCard .iconBox': {
     height: '90%',
     display: 'flex',
@@ -480,7 +556,6 @@ const wrapper = {
     justifyContent: 'center',
     flex: '1 1 0'
   },
-
   '& > .item.-type2.-br > .circle.-numCard .bigNum': {
     fontWeight: 300,
     color: '#2b2b2b',
@@ -489,11 +564,8 @@ const wrapper = {
     marginLeft: '15%'
   },
 
-  '& > .item.-type2.-bl': {
-    '--cr': CORNER_R,
-    transform: 'scaleY(-1)'
-  },
-
+  /* BL допоміжні лінії */
+  '& > .item.-type2.-bl': { '--cr': CORNER_R, transform: 'scaleY(-1)' },
   '& > .item.-type2.-bl::before': {
     content: "''",
     position: 'absolute',
@@ -507,25 +579,8 @@ const wrapper = {
     background: 'transparent',
     zIndex: 0
   },
-
-  '& > .item.-type2.-bl > .line': {
-    position: 'absolute',
-    top: 'calc(40% + var(--cr))',
-    left: '55%',
-    width: '44%',
-    height: 'calc(48% - var(--cr))',
-    border: 'none'
-  },
-
-  '& > .item.-type2.-bl > .line::before': {
-    content: "''",
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: `calc(100% - var(--cr))`,
-    borderLeft: `${LINE_W}px dashed ${COLOR_LINE}`
-  },
-
+  '& > .item.-type2.-bl > .line': { position: 'absolute', top: 'calc(40% + var(--cr))', left: '55%', width: '44%', height: 'calc(48% - var(--cr))', border: 'none' },
+  '& > .item.-type2.-bl > .line::before': { content: "''", position: 'absolute', top: 0, left: 0, height: `calc(100% - var(--cr))`, borderLeft: `${LINE_W}px dashed ${COLOR_LINE}` },
   '& > .item.-type2.-bl > .line::after': {
     content: "''",
     position: 'absolute',
@@ -538,18 +593,9 @@ const wrapper = {
     borderBottomLeftRadius: 'var(--cr)',
     background: 'transparent'
   },
+  '& > .item.-type2.-bl > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotBLZig} ${SPEED} linear infinite` },
 
-  '& > .item.-type2.-bl > .dot::after': {
-    left: 'calc(30% + 19% - 1px)',
-    top: '40%',
-    animation: `${moveDotBLZig} ${SPEED} linear infinite`
-  },
-
-  '& > .item.-type2.-br': {
-    '--cr': CORNER_R,
-    transform: 'scaleX(-1) scaleY(-1)'
-  },
-
+  '& > .item.-type2.-br': { '--cr': CORNER_R, transform: 'scaleX(-1) scaleY(-1)' },
   '& > .item.-type2.-br::before': {
     content: "''",
     position: 'absolute',
@@ -563,25 +609,8 @@ const wrapper = {
     background: 'transparent',
     zIndex: 0
   },
-
-  '& > .item.-type2.-br > .line': {
-    position: 'absolute',
-    top: 'calc(40% + var(--cr))',
-    left: '55%',
-    width: '43%',
-    height: 'calc(48% - var(--cr))',
-    border: 'none'
-  },
-
-  '& > .item.-type2.-br > .line::before': {
-    content: "''",
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: `calc(100% - var(--cr))`,
-    borderLeft: `${LINE_W}px dashed ${COLOR_LINE}`
-  },
-
+  '& > .item.-type2.-br > .line': { position: 'absolute', top: 'calc(40% + var(--cr))', left: '55%', width: '43%', height: 'calc(48% - var(--cr))', border: 'none' },
+  '& > .item.-type2.-br > .line::before': { content: "''", position: 'absolute', top: 0, left: 0, height: `calc(100% - var(--cr))`, borderLeft: `${LINE_W}px dashed ${COLOR_LINE}` },
   '& > .item.-type2.-br > .line::after': {
     content: "''",
     position: 'absolute',
@@ -594,29 +623,56 @@ const wrapper = {
     borderBottomLeftRadius: 'var(--cr)',
     background: 'transparent'
   },
+  '& > .item.-type2.-br > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotBRZig} ${SPEED} linear infinite`, animationDirection: 'reverse' },
 
-  '& > .item.-type2.-br > .dot::after': {
-    left: 'calc(30% + 19% - 1px)',
-    top: '40%',
-    animation: `${moveDotBRZig} ${SPEED} linear infinite`,
-    animationDirection: 'reverse'
-  },
+  '& > .item.-parallel > .line': { position: 'absolute', top: '20%', left: '-2%' },
 
-  '& > .item.-parallel > .line': {
-    position: 'absolute',
-    top: '20%',
-    left: '-2%'
-  },
-
-  /* компактний перший рядок TL: icon1 + stat1 + ZŁ */
+  /* TL перший рядок (валюта) — ще щільніше */
   '& > .item.-type2.-tl > .stats .row:first-of-type': {
-    gridTemplateColumns: 'auto auto auto',
-    columnGap: '1.2vmin',
+    gridTemplateColumns: 'auto max-content auto',
+    columnGap: '0.6vmin',
     justifyContent: 'flex-start',
   },
+
+  '& > .erp-stats': {
+  position: 'absolute',
+  left: '61.5%',
+  top: '90%',                      // можна 84–88%, якщо треба вище/нижче
+  transform: 'translateX(-50%)',
+  display: 'grid',
+  rowGap: '0.8vmin',
+  width: '40%',
+  pointerEvents: 'none',
+  zIndex: 9999,                    // було 3 — цього замало через трансформації
+},
+'& > .erp-stats .row': {
+  display: 'inline-flex',
+  alignItems: 'baseline',
+  gap: '0.6vmin',
+  lineHeight: 1.1,
+  whiteSpace: 'nowrap',
+},
+'& > .erp-stats .label': {
+  fontWeight: 700,
+  fontSize: 'clamp(12px, 2.1vmin, 22px)',
+  color: '#9397a1',
+  letterSpacing: '0.02em',
+},
+'& > .erp-stats .val': {
+  fontSize: 'clamp(14px, 2.5vmin, 26px)',
+  color: '#fc4d57',
+  fontWeight: 800,
+  display: 'inline-block',
+},
+'& > .erp-stats .suffix': {
+  fontWeight: 600,
+  fontSize: 'clamp(12px, 1.9vmin, 22px)',
+  color: '#9397a1',
+},
+
 };
 
-/* Щоб wrapper заповнював рамку */
+/* Заповнення рамки */
 const fillFrame = {
   position: 'absolute',
   inset: 0,
@@ -630,8 +686,10 @@ export default function EmpFlowchart({ images = {} }) {
   const {
     topLeft, topRight, bottomLeft, bottomRight, bottomCenter, center,
     number1, number2, number3, number4,
-    icon1, icon2, icon3, stat1, stat2, stat3,
-    stat2_1, stat2_2 , stat3_1, stat3_2 , stat3_3
+    icon1, icon2, icon3, stat1, stat2,
+    stat3, stat2_1, stat2_2, stat3_1,
+    stat3_2, stat3_3, stat4_1, stat4_2,
+    stat5_1, stat5_2
   } = images;
 
   const has2 = number2 != null;
@@ -757,6 +815,34 @@ export default function EmpFlowchart({ images = {} }) {
                     {bottomLeft && <img src={bottomLeft} alt="Bottom left" loading="lazy" decoding="async" />}
                   </div>
                 )}
+
+                {(stat3_1 != null || stat3_2 != null || stat3_3 != null) && (
+                  <div className="stats">
+                    {stat3_1 != null && (
+                      <div className="row">
+                        {icon1 && <img className="ico" src={icon1} alt="money" loading="lazy" decoding="async" />}
+                        <span className="val">{fmt(stat3_1)}</span>
+                        <span className="suffix">ZŁ</span>
+                      </div>
+                    )}
+                    {(stat3_2 != null || stat3_3 != null) && (
+                      <div className="row -pair">
+                        {stat3_2 != null && (
+                          <span className="grp">
+                            {icon2 && <img className="ico" src={icon2} alt="boxes" loading="lazy" decoding="async" />}
+                            <span className="val">{fmt(stat3_2)}</span>
+                          </span>
+                        )}
+                        {stat3_3 != null && (
+                          <span className="grp">
+                            {icon3 && <img className="ico" src={icon3} alt="people" loading="lazy" decoding="async" />}
+                            <span className="val">{fmt(stat3_3)}</span>
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* BR */}
@@ -773,6 +859,24 @@ export default function EmpFlowchart({ images = {} }) {
                 ) : (
                   <div className="circle" style={{ width: '25%', height: '25%' }}>
                     {bottomRight && <img src={bottomRight} alt="Bottom right" loading="lazy" decoding="async" />}
+                  </div>
+                )}
+
+                {(stat4_1 != null || stat4_2 != null) && (
+                  <div className="stats">
+                    {stat4_1 != null && (
+                      <div className="row">
+                        {icon1 && <img className="ico" src={icon1} alt="money" loading="lazy" decoding="async" />}
+                        <span className="val">{fmt(stat4_1)}</span>
+                        <span className="suffix">ZŁ</span>
+                      </div>
+                    )}
+                    {stat4_2 != null && (
+                      <div className="row">
+                        {icon2 && <img className="ico" src={icon2} alt="boxes" loading="lazy" decoding="async" />}
+                        <span className="val">{fmt(stat4_2)}</span>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -792,6 +896,27 @@ export default function EmpFlowchart({ images = {} }) {
                 <div className="circle" />
                 <div className="circle" />
               </div>
+
+              {/* ERP stats under bottom card */}
+              {(stat5_1 != null || stat5_2 != null) && (
+                <div className="erp-stats">
+                  {stat5_1 != null && (
+                    <div className="row">
+                      <span className="label">ZAMÓWIENIA:</span>
+                      <span className="val">{fmt(stat5_1)}</span>
+                      <span className="suffix">ZŁ</span>
+                    </div>
+                  )}
+                  {stat5_2 != null && (
+                    <div className="row">
+                      <span className="label">SPRZEDAŻ:</span>
+                      <span className="val">{fmt(stat5_2)}</span>
+                      <span className="suffix">ZŁ</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
             </div>
           </div>
         </div>

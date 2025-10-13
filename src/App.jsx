@@ -36,7 +36,11 @@ export default function App() {
         stat2_2: 17,
         stat3_1: 756000,
         stat3_2: 14,
-        stat3_3: 11
+        stat3_3: 11,
+        stat4_1: 62011,
+        stat4_2: 4,
+        stat5_1: 756000,
+        stat5_2: 488012
       }}
     />
   )
