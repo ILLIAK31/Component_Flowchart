@@ -332,7 +332,7 @@ const wrapper = {
   '& > .item.-type2.-tr > .stats .row': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.6vmin',
+    gap: '1.6vmin',
     whiteSpace: 'nowrap',
     lineHeight: 1.1,
   },
@@ -371,7 +371,7 @@ const wrapper = {
     display: 'flex',
     gridTemplateColumns: 'auto max-content auto',
     alignItems: 'center',
-    columnGap: '0.8vmin',
+    columnGap: '1.6vmin',
     lineHeight: 1.1,
   },
   '& > .item.-type2.-bl > .stats .row.-pair': {
@@ -415,7 +415,7 @@ const wrapper = {
   '& > .item.-type2.-br > .stats .row': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.6vmin',
+    gap: '1.6vmin',
     whiteSpace: 'nowrap',
     lineHeight: 1.1,
   },
@@ -657,7 +657,7 @@ const wrapper = {
   /* TL перший рядок (валюта) — ще щільніше */
   '& > .item.-type2.-tl > .stats .row:first-of-type': {
     gridTemplateColumns: 'auto max-content auto',
-    columnGap: '0.6vmin',
+    columnGap: '1.6vmin',
     justifyContent: 'flex-start',
   },
 
@@ -786,10 +786,10 @@ const freezeSizes = {
 
   // шрифти в px (масштабуються лише через transform)
   '& .bigNum': { fontSize: '48px !important', fontWeight: 300 },
-  '& .stats .val': { fontSize: '28px !important', fontWeight: 800 },
+  '& .stats .val': { fontSize: '32px !important', fontWeight: 800 },
   '& .stats .suffix': { fontSize: '26px !important', fontWeight: 600 },
   '& .erp-stats .label': { fontSize: '21px !important', fontWeight: 700 },
-  '& .erp-stats .val': { fontSize: '28px !important', fontWeight: 800 },
+  '& .erp-stats .val': { fontSize: '32px !important', fontWeight: 800 },
   '& .erp-stats .suffix': { fontSize: '26px !important', fontWeight: 600 },
 
   // іконки у статистиці
