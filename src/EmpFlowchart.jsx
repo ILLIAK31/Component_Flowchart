@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Global, keyframes } from '@emotion/react';
 
-/* ====== 0) ПРОСТИЙ CSS-СКЕЙЛЕР (без JS) ====== */
+/* ====== 0) СЦЕНА (зовнішні відступи) ====== */
 const PAD_X = 'clamp(32px, 6vw, 160px)';
 const PAD_Y = 'clamp(24px, 4vh, 96px)';
 
@@ -16,18 +16,50 @@ const stage = {
   overflow: 'hidden',
 };
 
-const frame = {
-  width: `min(calc(100vw - (2 * ${PAD_X})), calc((100vh - (2 * ${PAD_Y})) * 2))`,
-  aspectRatio: '2 / 1',
-  position: 'relative',
-};
+/* ====== 0.1) ЄДИНИЙ СКЕЙЛЕР (масштабує все як одну картинку) ====== */
+const BASE_W = 1800; // базова ширина макета (px)
+const BASE_H = 900;  // базова висота макета (px)
+
+function Scaler({ children }) {
+  const hostRef = useRef(null);
+  const [k, setK] = useState(1);
+
+  useLayoutEffect(() => {
+    const recalc = () => {
+      if (!hostRef.current) return;
+      const rect = hostRef.current.getBoundingClientRect();
+      setK(Math.min(rect.width / BASE_W, rect.height / BASE_H));
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
+  }, []);
+
+  return (
+    <div ref={hostRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: BASE_W,
+          height: BASE_H,
+          transform: `translate(-50%, -50%) scale(${k})`,
+          transformOrigin: 'center center',
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 /* ====== 1) КОНСТАНТИ/АНІМАЦІЇ ====== */
 const COLOR_BG = 'white';
 const COLOR_LINE = '#2b2929ff';
 const SPEED = '4s';
 const CORNER_R = '8px';
-const PAR_GAP = '24px';
+const PAR_GAP = '24px'; // було clamp(... vmin ...) — фіксуємо в px, щоб не реагувало на viewport
 const PAR_LEN = '45%';
 const LINE_W = 1;
 
@@ -47,7 +79,7 @@ const moveDotTLZig = keyframes({
   '100%': { top: '89%', left: '80%' },
 });
 
-/* ====== 2) СТИЛІ ====== */
+/* ====== 2) СТИЛІ (оригінальні) ====== */
 const wrapper = {
   position: 'fixed',
   top: '50%',
@@ -285,7 +317,7 @@ const wrapper = {
     color: '#9397a1',
   },
 
-  /* === TR STATS (icon1+stat2_1, icon2+stat2_2) === */
+  /* === TR STATS === */
   '& > .item.-type2.-tr > .stats': {
     position: 'absolute',
     right: '90%',
@@ -323,7 +355,7 @@ const wrapper = {
     color: '#9397a1',
   },
 
-  /* === BL STATS (icon1+stat3_1, icon2+stat3_2, icon3+stat3_3) === */
+  /* === BL STATS === */
   '& > .item.-type2.-bl > .stats': {
     position: 'absolute',
     left: '10%',
@@ -368,7 +400,7 @@ const wrapper = {
     color: '#9397a1',
   },
 
-  /* === BR STATS (icon1+stat4_1, icon2+stat4_2) === */
+  /* === BR STATS === */
   '& > .item.-type2.-br > .stats': {
     position: 'absolute',
     right: '90%',
@@ -458,11 +490,9 @@ const wrapper = {
   },
   '& > .item.-type2.-tr > .circle.-numCard .iconBox > img': {
     height: '90%',
-    width: '100%',
+    width: 'auto',
     maxHeight: '100%',
-    maxWidth: '100%',
     objectFit: 'contain',
-    objectPosition: 'center',
     paddingTop: '5%',
     marginRight: '-30% !important'
   },
@@ -489,8 +519,7 @@ const wrapper = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
-    borderRadius: 8
+    transform: 'translate(-50%, -50%)'
   },
 
   '& > .center > .circle:nth-child(1)': {
@@ -605,8 +634,7 @@ const wrapper = {
     borderTop: `${LINE_W}px dashed ${COLOR_LINE}`,
     borderRight: `${LINE_W}px dashed ${COLOR_LINE}`,
     borderTopRightRadius: 'var(--cr)',
-    background: 'transparent',
-    zIndex: 0
+    background: 'transparent'
   },
   '& > .item.-type2.-br > .line': { position: 'absolute', top: 'calc(40% + var(--cr))', left: '55%', width: '43%', height: 'calc(48% - var(--cr))', border: 'none' },
   '& > .item.-type2.-br > .line::before': { content: "''", position: 'absolute', top: 0, left: 0, height: `calc(100% - var(--cr))`, borderLeft: `${LINE_W}px dashed ${COLOR_LINE}` },
@@ -633,56 +661,20 @@ const wrapper = {
     justifyContent: 'flex-start',
   },
 
-  '& > .erp-stats': {
-    position: 'absolute',
-    left: '61.5%',
-    top: '88%',                      // можна 84–88%, якщо треба вище/нижче
-    transform: 'translateX(-50%)',
-    display: 'grid',
-    rowGap: '0.8vmin',
-    width: '40%',
-    pointerEvents: 'none',
-    zIndex: 9999,                    // було 3 — цього замало через трансформації
-  },
-  '& > .erp-stats .row': {
-    display: 'inline-flex',
-    alignItems: 'baseline',
-    gap: '0.6vmin',
-    lineHeight: 1.1,
-    whiteSpace: 'nowrap',
-  },
-  '& > .erp-stats .label': {
-    fontWeight: 700,
-    fontSize: 'clamp(12px, 2.1vmin, 22px)',
-    color: '#9397a1',
-    letterSpacing: '0.02em',
-  },
-  '& > .erp-stats .val': {
-    fontSize: 'clamp(14px, 2.5vmin, 26px)',
-    color: '#fc4d57',
-    fontWeight: 800,
-    display: 'inline-block',
-  },
-  '& > .erp-stats .suffix': {
-    fontWeight: 600,
-    fontSize: 'clamp(12px, 1.9vmin, 22px)',
-    color: '#9397a1',
-  },
-
   '& > .arrows-layer': {
     position: 'absolute',
     inset: 0,
     pointerEvents: 'none',
-    zIndex: 10,          // поверх центру
+    zIndex: 10,
   },
 
-  /* === TL ARROW (responsive) === */
+  /* === TL ARROW === */
   '& > .arrows-layer > .arrow': {
     position: 'absolute',
     top: '44.5%',
     left: '39.5%',
     transform: 'translate(-40%, -50%)',
-    width: '1.5%',  // ← головне: зменшується разом з екраном
+    width: '1.5%',
     height: 'auto',
   },
 
@@ -691,7 +683,7 @@ const wrapper = {
     top: '56.1%',
     left: '39.5%',
     transform: 'translate(-40%, -50%)',
-    width: '1.5%',  // ← головне: зменшується разом з екраном
+    width: '1.5%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -702,7 +694,7 @@ const wrapper = {
     top: '44.5%',
     left: '60.2%',
     transform: 'translate(-40%, -50%) rotate(180deg)',
-    width: '1.5%',  // ← головне: зменшується разом з екраном
+    width: '1.5%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -713,7 +705,7 @@ const wrapper = {
     top: '39.8%',
     left: '27%',
     transform: 'translate(-40%, -50%) rotate(180deg)',
-    width: '3%',  // ← головне: зменшується разом з екраном
+    width: '3%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -724,31 +716,81 @@ const wrapper = {
     top: '60.5%',
     left: '47.8%',
     transform: 'translate(-40%, -50%) rotate(270deg)',
-    width: '1.5%',  // ← головне: зменшується разом з екраном
+    width: '1.5%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
   },
 
-  '& >  .item.-bottom-main.-v-down > .arrow-bc': {
+  '& >  .arrows-layer > .arrow-bc': {
     position: 'absolute',
-    top: '54%',
-    left: '46%',
-    transform: 'translate(-40%, -50%) rotate(270deg)',
-    width: '3%',  // ← головне: зменшується разом з екраном
+    top: '73.2%',
+    left: '50.9%',
+    transform: 'translate(-40%, -50%) rotate(90deg)',
+    width: '1.5%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
   },
 };
 
-/* Заповнення рамки */
+/* Заповнення рамки для базового полотна 1800×900 */
 const fillFrame = {
   position: 'absolute',
   inset: 0,
   transform: 'none',
   width: '100%',
   height: '100%',
+};
+
+/* ====== 2.1) «Заморозка» всіх адаптивних vmin/clamp у px ====== */
+const freezeSizes = {
+  // рівні табличні цифри
+  '& .bigNum, & .stats .val, & .erp-stats .val': {
+    fontVariantNumeric: 'tabular-nums',
+    fontFeatureSettings: '"tnum"',
+  },
+
+  // шрифти в px (масштабуються лише через transform)
+  '& .bigNum':        { fontSize: '48px !important', fontWeight: 300 },
+  '& .stats .val':    { fontSize: '26px !important', fontWeight: 800 },
+  '& .stats .suffix': { fontSize: '18px !important', fontWeight: 600 },
+  '& .erp-stats .label':  { fontSize: '18px !important', fontWeight: 700 },
+  '& .erp-stats .val':    { fontSize: '26px !important', fontWeight: 800 },
+  '& .erp-stats .suffix': { fontSize: '18px !important', fontWeight: 600 },
+
+  // іконки у статистиці
+  '& .stats .ico': { height: '26px !important', width: 'auto' },
+
+  // червоні точки
+  '& > .item > .dot::after, & > .item.-type2 > .dot::after': {
+    height: '10px !important',
+    width: '10px !important',
+    borderWidth: '2px !important',
+  },
+
+  // тіні — в px
+  '& > .item > .circle, & > .item.-type2 > .circle': {
+    boxShadow: '0 0 24px rgba(0,0,0,.12)',
+  },
+
+  // відступи/гепи в px
+  '& .stats': { rowGap: '10px' },
+  '& .stats .row': { gap: '8px' },
+  '& .stats .row.-pair': { gap: '14px' },
+  '& .erp-stats': { rowGap: '8px' },
+  '& .erp-stats .row': { gap: '8px' },
+
+  // padding карток, де був 2vmin
+  '& > .item.-type2.-tl > .circle': { padding: '0 24px' },
+  '& > .item.-type2.-tr > .circle.-numCard': { padding: '0 24px' },
+  '& > .item.-type2.-bl > .circle.-numCard': { padding: '0 24px' },
+  '& > .item.-type2.-br > .circle.-numCard': { padding: '0 24px' },
+
+  // змінні паддінгу, які задавались у vmin
+  '& > .item.-bottom-main > .circle': { '--pad-x': '18px' },
+  '& > .item.-type2.-tr > .circle:not(.-numCard)': { '--pad-x': '18px' },
+  '& > .center > .circle:nth-child(1)': { '--pad-x': '20px' },
 };
 
 /* ====== 3) КОМПОНЕНТ ====== */
@@ -775,9 +817,9 @@ export default function EmpFlowchart({ images = {} }) {
     <>
       <Global styles={{ body: { margin: 0, background: 'white', fontFamily: '"Open Sans", system-ui' } }} />
       <div style={stage}>
-        <div style={frame}>
+        <Scaler>
           <div style={{ position: 'absolute', inset: 0 }}>
-            <div className="animation-example" css={[wrapper, fillFrame]}>
+            <div className="animation-example" css={[wrapper, fillFrame, freezeSizes]}>
               <div className="item" css={{ display: 'none' }} />
               <div className="item" css={{ display: 'none' }} />
 
@@ -788,7 +830,6 @@ export default function EmpFlowchart({ images = {} }) {
                 <div className="circle" style={{ width: '55%', height: '20%', ['--pad-x']: '1.2vmin' }}>
                   {bottomCenter && <img src={bottomCenter} alt="Bottom center" loading="lazy" decoding="async" />}
                 </div>
-                {arrow && <img className="arrow-bc" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               {/* bottom parallel */}
@@ -949,20 +990,21 @@ export default function EmpFlowchart({ images = {} }) {
                 )}
               </div>
 
+              {/* arrows layers */}
               <div className="arrows-layer">
                 {arrow && <img className="arrow" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
-
               <div className="arrows-layer">
                 {arrow && <img className="arrow-bl" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
-
               <div className="arrows-layer">
                 {arrow && <img className="arrow-b" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
-
               <div className="arrows-layer">
                 {arrow && <img className="arrow-tr" src={arrow} alt="" loading="lazy" decoding="async" />}
+              </div>
+              <div className="arrows-layer">
+                {arrow && <img className="arrow-bc" src={arrow} alt="" loading="lazy" decoding="async" />}
               </div>
 
               {/* center */}
@@ -983,7 +1025,7 @@ export default function EmpFlowchart({ images = {} }) {
 
               {/* ERP stats under bottom card */}
               {(stat5_1 != null || stat5_2 != null) && (
-                <div className="erp-stats">
+                <div className="erp-stats" style={{ position: 'absolute', left: '61.5%', top: '88%', transform: 'translateX(-50%)', width: '40%', pointerEvents: 'none', zIndex: 9999 }}>
                   {stat5_1 != null && (
                     <div className="row">
                       <span className="label">ZAMÓWIENIA:</span>
@@ -1000,10 +1042,9 @@ export default function EmpFlowchart({ images = {} }) {
                   )}
                 </div>
               )}
-
             </div>
           </div>
-        </div>
+        </Scaler>
       </div>
     </>
   );
