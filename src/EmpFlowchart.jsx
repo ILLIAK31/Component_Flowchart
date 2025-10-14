@@ -299,7 +299,7 @@ const wrapper = {
   '& > .item.-type2.-tl > .stats .grp': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.6vmin',
+    gap: '1.6vmin',
   },
   '& > .item.-type2.-tl > .stats .ico': {
     height: 'clamp(16px, 2.6vmin, 28px)',
@@ -382,7 +382,7 @@ const wrapper = {
   '& > .item.-type2.-bl > .stats .grp': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '0.6vmin',
+    gap: '1.6vmin',
   },
   '& > .item.-type2.-bl > .stats .ico': {
     height: 'clamp(16px, 2.6vmin, 28px)',
