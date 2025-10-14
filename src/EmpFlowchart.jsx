@@ -56,7 +56,7 @@ function Scaler({ children }) {
 
 /* ====== 1) КОНСТАНТИ/АНІМАЦІЇ ====== */
 const COLOR_BG = 'white';
-const COLOR_LINE = '#2b2929ff';
+const COLOR_LINE = '#2e3a45';
 const SPEED = '4s';
 const CORNER_R = '8px';
 const PAR_GAP = '24px'; // було clamp(... vmin ...) — фіксуємо в px, щоб не реагувало на viewport
@@ -359,7 +359,7 @@ const wrapper = {
   '& > .item.-type2.-bl > .stats': {
     position: 'absolute',
     left: '10%',
-    top: 'calc(-10% + 18%)',
+    top: 'calc(-13% + 18%)',
     transform: 'translate(-50%, 0) scaleY(-1)',
     display: 'grid',
     rowGap: '1vmin',
@@ -404,7 +404,7 @@ const wrapper = {
   '& > .item.-type2.-br > .stats': {
     position: 'absolute',
     right: '90%',
-    top: 'calc(-10% + 18%)',
+    top: 'calc(-13% + 18%)',
     transform: 'translate(50%, 0) scaleX(-1) scaleY(-1)',
     display: 'grid',
     rowGap: '1vmin',
@@ -674,16 +674,16 @@ const wrapper = {
     top: '44.5%',
     left: '39.5%',
     transform: 'translate(-40%, -50%)',
-    width: '1.5%',
+    width: '1.2%',
     height: 'auto',
   },
 
   '& > .arrows-layer > .arrow-bl': {
     position: 'absolute',
     top: '56.1%',
-    left: '39.5%',
+    left: '39.55%',
     transform: 'translate(-40%, -50%)',
-    width: '1.5%',
+    width: '1.2%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -694,7 +694,7 @@ const wrapper = {
     top: '44.5%',
     left: '60.2%',
     transform: 'translate(-40%, -50%) rotate(180deg)',
-    width: '1.5%',
+    width: '1.2%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -702,10 +702,10 @@ const wrapper = {
 
   '& > .item.-type2.-br > .arrow-br': {
     position: 'absolute',
-    top: '39.8%',
+    top: '40.5%',
     left: '27%',
     transform: 'translate(-40%, -50%) rotate(180deg)',
-    width: '3%',
+    width: '2.3%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -714,9 +714,9 @@ const wrapper = {
   '& >  .arrows-layer > .arrow-b': {
     position: 'absolute',
     top: '60.5%',
-    left: '47.8%',
+    left: '47.85%',
     transform: 'translate(-40%, -50%) rotate(270deg)',
-    width: '1.5%',
+    width: '1.2%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
@@ -724,10 +724,10 @@ const wrapper = {
 
   '& >  .arrows-layer > .arrow-bc': {
     position: 'absolute',
-    top: '73.2%',
-    left: '51.1%',
+    top: '73.38%',
+    left: '51.2%',
     transform: 'translate(-40%, -50%) rotate(90deg)',
-    width: '1.5%',
+    width: '1.2%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
