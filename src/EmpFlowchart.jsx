@@ -4,7 +4,7 @@ import { Global, keyframes } from '@emotion/react';
 
 /* ====== 0) СЦЕНА (зовнішні відступи) ====== */
 const PAD_X = 'clamp(32px, 6vw, 160px)';
-const PAD_Y = 'clamp(24px, 4vh, 96px)';
+const PAD_Y = '0px';
 
 const stage = {
   position: 'fixed',
@@ -40,12 +40,12 @@ function Scaler({ children }) {
       <div
         style={{
           position: 'absolute',
-          top: '50%',
+          top: '0',
           left: '50%',
           width: BASE_W,
           height: BASE_H,
-          transform: `translate(-50%, -50%) scale(${k})`,
-          transformOrigin: 'center center',
+          transform: `translateX(-50%) scale(${k})`,
+          transformOrigin: 'top center',
         }}
       >
         {children}
@@ -56,12 +56,14 @@ function Scaler({ children }) {
 
 /* ====== 1) КОНСТАНТИ/АНІМАЦІЇ ====== */
 const COLOR_BG = 'white';
-const COLOR_LINE = '#2e3a45';
+const COLOR_LINE = '#70808f';
 const SPEED = '4s';
-const CORNER_R = '8px';
 const PAR_GAP = '24px'; // було clamp(... vmin ...) — фіксуємо в px, щоб не реагувало на viewport
 const PAR_LEN = '45%';
-const LINE_W = 1;
+
+const CORNER_R = '8px';   // радіус кутів трохи більший, щоб виглядало м’якше
+const LINE_W = 3;          // головне: товщина пунктиру
+const LW_HALF = `${LINE_W / 2}px`;
 
 const moveDotStraight = keyframes({ '0%': { top: '10%' }, '25%': { top: '65%' }, '100%': { top: '65%' } });
 const moveDotStraightDeep = keyframes({ '0%': { top: '30%', left: '54%' }, '50%': { top: '82%', left: '54%' }, '100%': { top: '82%', left: '54%' } });
@@ -113,7 +115,7 @@ const wrapper = {
   '& > .item > .dot::after': {
     content: "''",
     position: 'absolute',
-    left: 'calc(53% + 1px)',
+    left: 'calc(53% + ${LW_HALF})',
     top: '10%',
     transform: 'translate(-50%, -50%)',
     height: '0.9vmin',
@@ -172,7 +174,7 @@ const wrapper = {
   '& > .item.-type2 > .line': {
     position: 'absolute',
     top: '41%',
-    left: 'calc(30% - 1px)',
+    left: 'calc(30% - ${LW_HALF})',
     width: '70%',
     height: '48%',
     borderRight: 'none',
@@ -184,7 +186,7 @@ const wrapper = {
   '& > .item.-type2 > .dot::after': {
     content: "''",
     position: 'absolute',
-    left: 'calc(30% - 1px)',
+    left: 'calc(30% - ${LW_HALF})',
     top: '40%',
     transform: 'translate(-50%, -50%)',
     height: '0.9vmin',
@@ -232,7 +234,7 @@ const wrapper = {
     content: "''", position: 'absolute', bottom: 0, left: 0, width: '100%', height: 'var(--cr)',
     borderLeft: `${LINE_W}px dashed ${COLOR_LINE}`, borderBottom: `${LINE_W}px dashed ${COLOR_LINE}`, borderBottomLeftRadius: 'var(--cr)', background: 'transparent',
   },
-  '& > .item.-type2.-tl > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
+  '& > .item.-type2.-tl > .dot::after': { left: 'calc(30% + 19% - ${LW_HALF})', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
 
   /* TR — дзеркало до TL */
   '& > .item.-type2.-tr': { '--cr': CORNER_R, transform: 'scaleX(-1)' },
@@ -255,7 +257,7 @@ const wrapper = {
     content: "''", position: 'absolute', bottom: 0, left: 0, width: '100%', height: 'var(--cr)',
     borderLeft: `${LINE_W}px dashed ${COLOR_LINE}`, borderBottom: `${LINE_W}px dashed ${COLOR_LINE}`, borderBottomLeftRadius: 'var(--cr)', background: 'transparent',
   },
-  '& > .item.-type2.-tr > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
+  '& > .item.-type2.-tr > .dot::after': { left: 'calc(30% + 19% - ${LW_HALF})', top: '40%', animation: `${moveDotTLZig} ${SPEED} linear infinite` },
 
   /* TL картка */
   '& > .item.-type2.-tl > .circle': {
@@ -621,7 +623,7 @@ const wrapper = {
     borderBottomLeftRadius: 'var(--cr)',
     background: 'transparent'
   },
-  '& > .item.-type2.-bl > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotBLZig} ${SPEED} linear infinite` },
+  '& > .item.-type2.-bl > .dot::after': { left: 'calc(30% + 19% - ${LW_HALF})', top: '40%', animation: `${moveDotBLZig} ${SPEED} linear infinite` },
 
   '& > .item.-type2.-br': { '--cr': CORNER_R, transform: 'scaleX(-1) scaleY(-1)' },
   '& > .item.-type2.-br::before': {
@@ -650,7 +652,7 @@ const wrapper = {
     borderBottomLeftRadius: 'var(--cr)',
     background: 'transparent'
   },
-  '& > .item.-type2.-br > .dot::after': { left: 'calc(30% + 19% - 1px)', top: '40%', animation: `${moveDotBRZig} ${SPEED} linear infinite`, animationDirection: 'reverse' },
+  '& > .item.-type2.-br > .dot::after': { left: 'calc(30% + 19% - ${LW_HALF})', top: '40%', animation: `${moveDotBRZig} ${SPEED} linear infinite`, animationDirection: 'reverse' },
 
   '& > .item.-parallel > .line': { position: 'absolute', top: '20%', left: '-2%' },
 
