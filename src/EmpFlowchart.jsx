@@ -69,12 +69,12 @@ const moveDotStraightDeeper = keyframes({ '0%': { top: '10%', left: '50.1%' }, '
 const moveDotCorner = keyframes({ '0%': { top: '40%', left: 'calc(30% - 1px)' }, '45%': { top: '88%', left: 'calc(30% - 1px)' }, '100%': { top: '88%', left: 'calc(100% - 1px)' } });
 const moveDotCornerLeft = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
 const moveDotCornerRight = keyframes({ '0%': { top: '40%', left: '30%' }, '45%': { top: '88%', left: '30%' }, '100%': { top: '88%', left: '100%' } });
-const moveDotBLZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: 'calc(55% + 1px)' }, '70%': { top: '88%', left: 'calc(55% + 1px)' }, '100%': { top: '88%', left: '80%' } });
-const moveDotBRZig = keyframes({ '0%': { top: '39.5%', left: 'calc(5% + 19%)' }, '30%': { top: '39.5%', left: '55%' }, '70%': { top: '88%', left: '55%' }, '100%': { top: '88%', left: '80%' } });
+const moveDotBLZig = keyframes({ '0%': { top: '40.3%', left: 'calc(5% + 19%)' }, '30%': { top: '40.3%', left: 'calc(55% + 1px)' }, '70%': { top: '88%', left: 'calc(55% + 1px)' }, '100%': { top: '88%', left: '80%' } });
+const moveDotBRZig = keyframes({ '0%': { top: '40.3%', left: 'calc(5% + 19%)' }, '30%': { top: '40.3%', left: '55%' }, '70%': { top: '88%', left: '55%' }, '100%': { top: '88%', left: '80%' } });
 
 const moveDotTLZig = keyframes({
-  '0%': { top: '40.6%', left: 'calc(5% + 19%)' },
-  '30%': { top: '40.6%', left: '55%' },
+  '0%': { top: '41.5%', left: 'calc(5% + 19%)' },
+  '30%': { top: '41.5%', left: '55%' },
   '70%': { top: '89%', left: '55%' },
   '100%': { top: '89%', left: '80%' },
 });
@@ -725,13 +725,46 @@ const wrapper = {
   '& >  .arrows-layer > .arrow-bc': {
     position: 'absolute',
     top: '73.2%',
-    left: '50.9%',
+    left: '51.1%',
     transform: 'translate(-40%, -50%) rotate(90deg)',
     width: '1.5%',
     height: 'auto',
     zIndex: 4,
     pointerEvents: 'none',
   },
+
+    /* === ERP STATS (під нижнім квадратом) === */
+  '& > .erp-stats': {
+    position: 'absolute',
+    left: '61.5%',
+    top: '90%',                     // було 88% — підняли трохи вище краю
+    transform: 'translateX(-50%)',
+    display: 'grid',
+    rowGap: '8px',
+    width: '40%',
+    pointerEvents: 'none',
+    zIndex: 10000,                  // вище за arrows-layer (10)
+  },
+  '& > .erp-stats .row': {
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    gap: '8px',
+    lineHeight: 1.1,
+    whiteSpace: 'nowrap'
+  },
+  '& > .erp-stats .label': {
+    fontWeight: 700,
+    color: '#9397a1',
+  },
+  '& > .erp-stats .val': {
+    color: '#fc4d57',
+    fontWeight: 800,
+  },
+  '& > .erp-stats .suffix': {
+    fontWeight: 600,
+    color: '#9397a1',
+  },
+
 };
 
 /* Заповнення рамки для базового полотна 1800×900 */
@@ -752,15 +785,15 @@ const freezeSizes = {
   },
 
   // шрифти в px (масштабуються лише через transform)
-  '& .bigNum':        { fontSize: '48px !important', fontWeight: 300 },
-  '& .stats .val':    { fontSize: '26px !important', fontWeight: 800 },
-  '& .stats .suffix': { fontSize: '18px !important', fontWeight: 600 },
-  '& .erp-stats .label':  { fontSize: '18px !important', fontWeight: 700 },
-  '& .erp-stats .val':    { fontSize: '26px !important', fontWeight: 800 },
-  '& .erp-stats .suffix': { fontSize: '18px !important', fontWeight: 600 },
+  '& .bigNum': { fontSize: '48px !important', fontWeight: 300 },
+  '& .stats .val': { fontSize: '28px !important', fontWeight: 800 },
+  '& .stats .suffix': { fontSize: '26px !important', fontWeight: 600 },
+  '& .erp-stats .label': { fontSize: '21px !important', fontWeight: 700 },
+  '& .erp-stats .val': { fontSize: '28px !important', fontWeight: 800 },
+  '& .erp-stats .suffix': { fontSize: '26px !important', fontWeight: 600 },
 
   // іконки у статистиці
-  '& .stats .ico': { height: '26px !important', width: 'auto' },
+  '& .stats .ico': { height: '30px !important', width: 'auto' },
 
   // червоні точки
   '& > .item > .dot::after, & > .item.-type2 > .dot::after': {
@@ -1025,7 +1058,7 @@ export default function EmpFlowchart({ images = {} }) {
 
               {/* ERP stats under bottom card */}
               {(stat5_1 != null || stat5_2 != null) && (
-                <div className="erp-stats" style={{ position: 'absolute', left: '61.5%', top: '88%', transform: 'translateX(-50%)', width: '40%', pointerEvents: 'none', zIndex: 9999 }}>
+                <div className="erp-stats">
                   {stat5_1 != null && (
                     <div className="row">
                       <span className="label">ZAMÓWIENIA:</span>
@@ -1042,6 +1075,7 @@ export default function EmpFlowchart({ images = {} }) {
                   )}
                 </div>
               )}
+
             </div>
           </div>
         </Scaler>
