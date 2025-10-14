@@ -545,7 +545,7 @@ const wrapper = {
   },
 
   '& > .item.-bottom-main > .circle': {
-    top: '28%',
+    top: '27.6%',
     height: '25% !important',
     width: '35% !important'
   },
@@ -724,7 +724,7 @@ const wrapper = {
 
   '& >  .arrows-layer > .arrow-bc': {
     position: 'absolute',
-    top: '73.38%',
+    top: '73.5%',
     left: '51.2%',
     transform: 'translate(-40%, -50%) rotate(90deg)',
     width: '1.2%',
@@ -737,7 +737,7 @@ const wrapper = {
   '& > .erp-stats': {
     position: 'absolute',
     left: '61.5%',
-    top: '90%',                     // було 88% — підняли трохи вище краю
+    top: '88%',                     // було 88% — підняли трохи вище краю
     transform: 'translateX(-50%)',
     display: 'grid',
     rowGap: '8px',
