@@ -62,7 +62,7 @@ const PAR_GAP = '24px'; // було clamp(... vmin ...) — фіксуємо в 
 const PAR_LEN = '45%';
 
 const CORNER_R = '8px';   // радіус кутів трохи більший, щоб виглядало м’якше
-const LINE_W = 3;          // головне: товщина пунктиру
+const LINE_W = 2;          // головне: товщина пунктиру
 const LW_HALF = `${LINE_W / 2}px`;
 
 const moveDotStraight = keyframes({ '0%': { top: '10%' }, '25%': { top: '65%' }, '100%': { top: '65%' } });
