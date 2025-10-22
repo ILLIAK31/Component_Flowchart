@@ -16,7 +16,7 @@ import arrow from './assets/arrow.png';
 export default function App() {
   return (
     <EmpFlowchart
-      images={{
+      args={{
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
